@@ -23,13 +23,15 @@ class ThreadTest extends TestCase
 
     public function test_a_thread_can_add_a_reply(){
 
-        $thread = factory(\App\Thread::class)->create();
+        $this->thread = factory(\App\Thread::class)->create();
+
+        
         $this->thread->addReply([
             'body' => 'Foobar',
             'user_id' => 1
         ]);
 
-        $this->assertCount(1, $this->thread->repies);
+        $this->assertCount(1, $this->thread->replies);
 
     }
 }

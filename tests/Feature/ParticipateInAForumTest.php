@@ -33,7 +33,7 @@ class ParticipateInAForumTest extends TestCase
 
         //A user can post a reply
         $reply = factory(\App\Reply::class)->make();
-        $this->post('threads/'.$thread->id.'/replies', $reply->toArray());
+        $this->post($thread->path().'/replies', $reply->toArray());
 
         //their reply should be visible on the page
 
@@ -44,23 +44,4 @@ class ParticipateInAForumTest extends TestCase
 
 }
 
-// public function test_a_user_can_participate_in_forum_threads(){
-
-        
-//         // //User has to be authenticated
-//         // $user = factory(\App\User::class)->create();
-//         // $this->be($user);
-
-//         // //Existing thread
-//         // $thread = factory(\App\Thread::class)->create();
-
-//         // //A user can post a reply
-//         // $reply = factory(\App\Reply::class)->make();
-//         // $this->post('threads/'.$thread->id.'/replies', $reply->toArray());
-
-//         // //their reply should be visible on the page
-
-//         // $this->get($thread->path())
-//         //     ->assertSee($reply->body);
-
-//     }
+    
