@@ -19,5 +19,7 @@ class ReplyController extends Controller
     		'user_id' => Auth()->user()->id
 
     	]);
+
+        return redirect($thread->path());
     }
 }
