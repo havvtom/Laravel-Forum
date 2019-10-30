@@ -21,6 +21,12 @@ class ThreadTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function test_a_thread_can_make_a_string_path(){
+
+        $thread = factory(\App\Thread::class)->create();
+        $this->assertEquals('threads/'.$thread->channel->slug.'/'.$thread->id, $thread->path());
+    }
+
     public function test_a_thread_can_add_a_reply(){
 
         $this->thread = factory(\App\Thread::class)->create();

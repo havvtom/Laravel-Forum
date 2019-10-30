@@ -3,13 +3,17 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Thread;
+use App\Channel;
 use Faker\Generator as Faker;
 
 $factory->define(Thread::class, function (Faker $faker) {
     return [
-        'title' => $faker->title,
+        'title' => $faker->word,
         'body' => $faker->paragraph,
-        'user_id' => factory(App\User::class),
-        'channel_id' => factory(App\Channel::class)
+        'channel_id' => function(){
+        	return factory(App\Channel::class)->create()->id;
+        },
+        'user_id' => factory(App\User::class)
+        
     ];
 });

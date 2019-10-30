@@ -11,7 +11,7 @@ class ReplyController extends Controller
 		$this->middleware('auth');
 	}
 	
-    public function store(Thread $thread, Request $request){
+    public function store($channelID, Thread $thread, Request $request){
 
     	$thread->addReply([
 

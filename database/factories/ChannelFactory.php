@@ -2,11 +2,14 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Model;
+use App\Channel;
 use Faker\Generator as Faker;
 
-$factory->define(Model::class, function (Faker $faker) {
+$factory->define(Channel::class, function (Faker $faker) {
+
+	$name = $faker->word;
     return [
-        //
+        'name' => $name,
+        'slug' => $name
     ];
 });

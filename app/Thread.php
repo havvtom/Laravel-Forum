@@ -9,7 +9,7 @@ class Thread extends Model
     protected $guarded = [];
     
     public function path(){
-    	return 'threads/'.$this->id;
+    	return 'threads/'.$this->channel->slug.'/'.$this->id;
     }
 
     public function replies(){
@@ -28,6 +28,6 @@ class Thread extends Model
     }
 
     public function channel(){
-        $this->belongsTo(\App\Channel::class);
+        return $this->belongsTo(\App\Channel::class);
     }
 }

@@ -32,8 +32,9 @@ class ThreadTest extends TestCase
         $response = $this->get('/threads')
 
         	->assertStatus(200);
+            
 
-        $response = $this->get('/threads/'.$this->thread->id)
+        $response = $this->get('/threads/'.$this->thread->channel->slug.'/'.$this->thread->id)
 
         	->assertSee($this->thread->title);
     }
@@ -42,7 +43,7 @@ class ThreadTest extends TestCase
 
     	$reply = factory(\App\Reply::class)->create(['thread_id' => $this->thread->id]);
 
-    	$response= $this->get('/threads/'.$this->thread->id)
+    	$response= $this->get('/threads/'.$this->thread->channel->slug.'/'.$this->thread->id)
 
         	->assertSee($reply->body);
 

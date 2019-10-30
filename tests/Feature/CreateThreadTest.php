@@ -32,7 +32,7 @@ class CreateThreadTest extends TestCase
         $this->be($user);
 
         //hit the end point(post a thread)
-        $thread = factory(\App\Thread::class)->make();
+        $thread = factory(\App\Thread::class)->create();
         $this->post('/threads', $thread->toArray());
 
         //see the thread when you hit the threads endpoint
