@@ -47,4 +47,14 @@ class ThreadTest extends TestCase
 
         $this->assertInstanceOf(\App\Channel::class, $thread->channel);
     }
+
+    public function test_a_user_can_filter_threads_according_to_a_tag(){
+        $channel = factory(\App\Thread::class)->create();
+        $threadInChannel = factory(\App\Thread::class)->create(['channel_id' => $channel->id]);
+        $threadNotInChannel = factory(\App\Thread::class)->create();
+
+        $this->get('/threads/'.$channel->slug)
+            ->assertSee($threadInChannel->title);
+           
+    }
 }

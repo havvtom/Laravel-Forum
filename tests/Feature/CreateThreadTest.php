@@ -32,17 +32,47 @@ class CreateThreadTest extends TestCase
         $this->be($user);
 
         //hit the end point(post a thread)
-        $thread = factory(\App\Thread::class)->create();
-        $this->post('/threads', $thread->toArray());
+        $thread = factory(\App\Thread::class)->make();
+        $response = $this->post('/threads', $thread->toArray());
+        $response->headers->get('Location');
 
         //see the thread when you hit the threads endpoint
-        $response = $this->get($thread->path());
-
-        $response->assertSee($thread->title)
+        $this->get($response->headers->get('Location'))
+                ->assertSee($thread->title)
                 ->assertSee($thread->body);
+    }
 
+    public function publishThread($overrides = []){
+        $user = factory(\App\User::class)->create();
+        $this->be($user);
 
+        $thread = factory(\App\Thread::class)->make($overrides);
 
+         return $this->post('/threads', $thread->toArray());
+            
+    }
 
+    public function test_a_thread_requires_a_title(){
+
+        $this->publishThread(['title' => ""])->assertStatus(302)
+                            ->assertSessionHasErrors('title');
+        
+    }
+
+     public function test_a_thread_requires_a_body(){
+
+        $this->publishThread(['body' => ""])->assertStatus(302)
+                            ->assertSessionHasErrors('body');
+        
+    }
+
+    public function test_a_thread_requires_a_valid_channel(){
+
+        $channel = factory(\App\Channel::class, 2)->create();
+        $this->publishThread(['channel_id' => 999])->assertStatus(302)
+                            ->assertSessionHasErrors('channel_id');
+
+        $this->publishThread(['channel_id' => ""])->assertStatus(302)
+                            ->assertSessionHasErrors('channel_id');
     }
 }
