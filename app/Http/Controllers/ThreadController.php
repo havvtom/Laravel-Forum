@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Thread;
-use App\User;
 use App\Reply;
 use App\Channel;
 use Illuminate\Http\Request;
@@ -18,20 +17,16 @@ class ThreadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($channelSlug = null)
+    public function index($channelSlug = null, Request $request)
     {
         if($channelSlug){
             $channel = Channel::where('slug', $channelSlug)->first();
             $threads = $channel->threads;          
 
-        }
-        elseif($username = request('by')){
-            $userId = User::where('name', $username)->first()->id;
-            $threads = Thread::where('user_id', $userId)->get();
-        }
-        else{
-           $threads = Thread::latest()->get(); 
-       }        
+        }else{
+           $threads = Thread::latest()->filter($request)->get(); 
+       }       
+
         return view('threads.index', compact('threads'));
     }
 
@@ -77,9 +72,10 @@ class ThreadController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show( $channelId, Thread $thread)
-    {        
-        
-        return view('threads.show', compact('thread'));
+    {     
+
+        $replies = $thread->replies()->paginate(10);
+        return view('threads.show', compact('thread', 'replies'));
 
     }
 
