@@ -65,7 +65,7 @@ class ThreadTest extends TestCase
         $threadByJohn = factory(\App\Thread::class)->create(['user_id' => $user->id]);
         $threadNotByJohn = factory(\App\Thread::class)->create();
 
-        $this->get('threads?byJohnDoe')
+        $this->get('/threads?by=JohnDoe')
             ->assertSee($threadByJohn->title)
             ->assertDontSee($threadNotByJohn->title);
     }

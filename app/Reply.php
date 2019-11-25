@@ -16,4 +16,8 @@ class Reply extends Model
     public function thread(){
     	return $this->belongsTo(Thread::class);
     }
+
+    public function favorites(){
+    	return $this->morphMany(\App\Favorite::class, 'favoritable');
+    }
 }
