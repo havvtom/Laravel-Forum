@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::get('/threads', 'ThreadController@index');
 
-Route::get('/threads/{channel}/{thread}', 'ThreadController@show');
+Route::get('/threads/{channel}/{thread}', 'ThreadController@show')->middleware('auth');
 // Route::resource('/threads', 'ThreadController');
 
 Auth::routes();

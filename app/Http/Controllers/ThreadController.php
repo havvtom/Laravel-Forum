@@ -24,7 +24,7 @@ class ThreadController extends Controller
             $threads = $channel->threads;          
 
         }else{
-           $threads = Thread::latest()->filter($request)->get(); 
+           $threads = Thread::with('channel')->latest()->filter($request)->get(); 
        }       
 
         return view('threads.index', compact('threads'));
