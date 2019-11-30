@@ -17,8 +17,9 @@ Route::get('/', function () {
 
 Route::get('/threads', 'ThreadController@index');
 
-Route::get('/threads/{channel}/{thread}', 'ThreadController@show')->middleware('auth');
-// Route::resource('/threads', 'ThreadController');
+Route::get('/threads/{channel}/{thread}', 'ThreadController@show')->name('thread');
+
+Route::delete('/threads/{channel}/{thread}', 'ThreadController@destroy');
 
 Auth::routes();
 
@@ -33,3 +34,5 @@ Route::get('/threads/create', 'ThreadController@create');
 Route::get('/threads/{channel}', 'ThreadController@index');
 
 Route::post('/replies/{reply}/favorites', 'FavoriteController@store');
+
+Route::get('/profiles/{user}', 'ProfileController@show')->name('profile');

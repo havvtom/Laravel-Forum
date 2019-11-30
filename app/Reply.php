@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reply extends Model
 {
 	protected $guarded = [];
+    protected $with = ['user', 'favorites'];
 	
     public function user(){
     	return $this->belongsTo(User::class);
@@ -30,6 +31,14 @@ class Reply extends Model
     }
 
     public function isFavorited(){
-    	return $this->favorites()->where(['user_id'=>Auth()->user()->id])->exists();
+        if(!Auth()->user()){
+            return true;
+        }
+    	return $this->favorites->where('user_id', Auth()->user()->id)->count();
+    }
+
+    public function getFavoritesCountAttribute(){
+        return $this->favorites->count();
     }
 }
+

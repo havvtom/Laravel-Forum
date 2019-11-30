@@ -4,26 +4,26 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            @forelse($threads as $thread)
             <div class="card">
-                <div class="card-header">Threads</div>
-
-                <div class="card-body">
-                   @foreach($threads as $thread)
-                    <article>
-                        <div class="level">
-                            <h4 class="flex">
-                                <a href="{{$thread->path()}}">{{$thread->title}}</a>
-                            </h4>
-                            <strong><a href="{{$thread->path()}}">{{$thread->replies_count}} {{Str::plural('reply', $thread->replies_count)}}</a></strong>
-                        </div>
-                    </article>
+                <div class="card-header">
+                    <div class="level">
+                        <h4 class="flex">
+                            <a href="{{route ('thread', [$thread->channel->slug, $thread->id])}}">{{$thread->title}}</a>
+                        </h4>
+                        <strong><a href="{{route ('thread', [$thread->channel->slug, $thread->id])}}">{{$thread->replies_count}} {{Str::plural('reply', $thread->replies_count)}}</a></strong>
+                    </div>
+                </div>
+                <div class="card-body">                   
                     <div class="body">
                         {{$thread->body}}
                     </div>
-                    <hr>
-                   @endforeach
+                    <hr>                   
                 </div>
             </div>
+            @empty
+            <p>There is nothing to show at the moment...</p>
+            @endforelse
         </div>
     </div>
 </div>

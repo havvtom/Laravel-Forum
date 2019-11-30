@@ -108,8 +108,19 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Thread $thread)
+    public function destroy($channelId, Thread $thread)
     {
-        //
+        if(Auth()->user()->id == $thread->user_id){
+            $thread->replies()->delete();
+            $thread->delete();
+
+            return redirect('/threads');
+        }
+
+        if(request()->wantsJson()){
+            return response([], 204);
+        }
+
+        return redirect('/login');
     }
 }
