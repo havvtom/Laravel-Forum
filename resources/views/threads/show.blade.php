@@ -16,13 +16,15 @@
             <div class="card">
                 <div class="card-header">
                   <div class='level'>
-                    <span class="flex"><a href="{{route('profile', $thread->owner->name)}}">{{$thread->owner->name}} </a> posted: {{$thread->title}}</span>
+                    <span class="flex"><a href="{{route('profile', $thread->owner->name)}}">{{$thread->owner->name}} </a> posted: <a href="{{route('thread', [$thread->channel->slug, $thread->id])}}">{{$thread->title}}</a></span>
                     <span>
+                      @can('update', $thread)
                       <form action="{{basename($thread->path())}}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-link">Delete Thread</button>
                       </form>
+                      @endcan
                     </span>
                   </div>
                 </div>
