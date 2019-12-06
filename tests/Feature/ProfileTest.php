@@ -64,6 +64,6 @@ class ProfileTest extends TestCase
         $this->be($user);
 
         $response = $this->delete($thread->path());
-        $response->assertRedirect('/login');
+        $response->assertStatus(403);
     }
 }

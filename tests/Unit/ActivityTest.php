@@ -25,11 +25,23 @@ class ActivityTest extends TestCase
 
     	$thread = factory(\App\Thread::class)->create();
 
+        $activity = \App\Activity::first();
+
     	$this->assertDatabaseHas('activities', [
     		'type' => 'created_thread',
     		'user_id' => Auth()->user()->id,
-    		'subject_id' => $thread->id,
-    		'subject_type' => '\App\Thread'
+    		'subjectable_id' => $thread->id,
+    		'subjectable_type' => "App\Thread"
     	]);
+
+        $this->assertEquals($activity->subjectable->id, $thread->id);
+    }
+
+    public function test_it_records_activity_when_reply_is_made(){
+        $this->be(factory(\App\User::class)->create());
+
+        $reply = factory(\App\Reply::class)->create();
+
+        $this->assertEquals(2, \App\Activity::count());
     }
 }

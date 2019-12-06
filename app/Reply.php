@@ -3,10 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\RecordsActivityTrait;
 
 
 class Reply extends Model
 {
+
+    use RecordsActivityTrait; 
+
 	protected $guarded = [];
     protected $with = ['user', 'favorites'];
 	

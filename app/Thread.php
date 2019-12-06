@@ -8,14 +8,19 @@ use App\Filters\Threads\ThreadFilters;
 
 class Thread extends Model
 {
+    use RecordsActivityTrait;
+
     protected $guarded = [];
 
     protected static function boot(){
+
         parent::boot();
 
         static::addGlobalScope('replyCount', function(Builder $builder){
             $builder->withCount('replies');
         });
+
+        
     }
     
     public function path(){
