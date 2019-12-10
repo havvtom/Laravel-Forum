@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Carbon\Carbon;
 
 class ProfileTest extends TestCase
 {
@@ -24,6 +25,7 @@ class ProfileTest extends TestCase
     public function test_profile_displays_threads_created_by_associated_user(){
 
         $user = factory(\App\User::class)->create();
+        $this->be($user);
 
         $thread = factory(\App\Thread::class)->create(['user_id' => $user->id]);
 
@@ -54,6 +56,16 @@ class ProfileTest extends TestCase
 
         $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
 
+        $this->assertDatabaseMissing('activities', [
+            'subjectable_id' => $thread->id,
+            'subjectable_type' => get_class($thread)
+        ]);
+
+        $this->assertDatabaseMissing('activities', [
+            'subjectable_id' => $reply->id,
+            'subjectable_type' => get_class($reply)
+        ]);
+
     }
 
     public function test_unauthorised_users_cannot_delete_threads(){        
@@ -65,5 +77,23 @@ class ProfileTest extends TestCase
 
         $response = $this->delete($thread->path());
         $response->assertStatus(403);
+    }
+
+    public function test_fetches_a_feed_for_any_user(){
+
+        $this->be($user = factory(\App\User::class)->create());
+
+        factory(\App\Thread::class, 2)->create(['user_id' => $user->id]);
+        $user->activities->first()->update(['created_at' => Carbon::now()->subWeek()]);
+        $feed = \App\Activity::feed($user);
+
+
+        $this->assertTrue($feed->keys()->contains(
+            Carbon::now()->format('Y-m-d')
+        ));
+
+        $this->assertTrue($feed->keys()->contains(
+            Carbon::now()->subWeek()->format('Y-m-d')
+        ));
     }
 }
