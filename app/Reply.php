@@ -44,5 +44,10 @@ class Reply extends Model
     public function getFavoritesCountAttribute(){
         return $this->favorites->count();
     }
+
+    public function path(){
+       $url = route('thread', [$this->thread->channel->slug, $this->thread->id])."#reply-".$this->id;
+       return $url;
+    }
 }
 

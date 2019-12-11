@@ -54,6 +54,32 @@ class ParticipateInAForumTest extends TestCase
             ->assertSessionHasErrors('body');
     }
 
+    public function test_unauthorised_users_cannot_delete_replies(){
+      
+
+        $reply = factory(\App\Reply::class)->create();
+        $this->delete('/replies/'.$reply->id)
+
+            ->assertRedirect('/login');
+
+        $this->be(factory(\App\User::class)->create());
+        $this->delete('/replies/'.$reply->id)
+
+            ->assertStatus(403);
+
+    }
+
+    public function test_authorized_users_can_delete_replies(){
+        $user = factory(\App\User::class)->create();
+        $this->be($user);
+        $reply = factory(\App\Reply::class)->create(['user_id' => $user->id]);
+        
+        $this->delete('/replies/'.$reply->id);
+        
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+
+    }
+
 }
 
     

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Favorite extends Model
 {
+	use RecordsActivityTrait;
+
 	protected $guarded = [];
 
     public function favoritable(){
