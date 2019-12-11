@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Route::get('/threads', 'ThreadController@index');
 
+Route::get('/threads/create', 'ThreadController@create');
+
 Route::get('/threads/{channel}/{thread}', 'ThreadController@show')->name('thread');
 
 Route::delete('/threads/{channel}/{thread}', 'ThreadController@destroy');
@@ -29,7 +31,7 @@ Route::post('/threads/{channel}/{thread}/replies', 'ReplyController@store');
 
 Route::post('/threads', 'ThreadController@store');
 
-Route::get('/threads/create', 'ThreadController@create');
+
 
 Route::get('/threads/{channel}', 'ThreadController@index');
 
@@ -38,3 +40,5 @@ Route::post('/replies/{reply}/favorites', 'FavoriteController@store');
 Route::get('/profiles/{user}', 'ProfileController@show')->name('profile');
 
 Route::delete('/replies/{reply}', 'ReplyController@destroy')->name('delete_reply');
+
+Route::patch('/replies/{reply}', 'ReplyController@update');

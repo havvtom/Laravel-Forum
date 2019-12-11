@@ -75,8 +75,35 @@ class ParticipateInAForumTest extends TestCase
         $reply = factory(\App\Reply::class)->create(['user_id' => $user->id]);
         
         $this->delete('/replies/'.$reply->id);
-        
+
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+
+    }
+
+    public function test_authorized_users_can_update_replies(){
+        $user = factory(\App\User::class)->create();
+        $this->be($user);
+        $reply = factory(\App\Reply::class)->create(['user_id' => $user->id]);
+
+        $updatedReply = 'You have been changed, fool';
+
+        $this->patch('/replies/'.$reply->id, ['body' => $updatedReply]);
+
+        $this->assertDatabaseHas('replies', ['id' => $reply->id,'body' => $updatedReply]);
+    }
+
+     public function test_unauthorised_users_cannot_update_replies(){
+      
+
+        $reply = factory(\App\Reply::class)->create();
+        $this->patch('/replies/'.$reply->id)
+
+            ->assertRedirect('/login');
+
+        $this->be(factory(\App\User::class)->create());
+        $this->patch('/replies/'.$reply->id)
+
+            ->assertStatus(403);
 
     }
 

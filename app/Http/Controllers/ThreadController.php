@@ -62,7 +62,7 @@ class ThreadController extends Controller
             'channel_id' => $request->channel_id
         ]);
 
-        return redirect($thread->path())->with('flash', "Your thread has been published");
+        return redirect()->route('thread', [$thread->channel->slug, $thread->id])->with('flash', "Your thread has been published");
     }
 
     /**
