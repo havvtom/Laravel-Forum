@@ -13,6 +13,7 @@ class Reply extends Model
 
 	protected $guarded = [];
     protected $with = ['user', 'favorites'];
+    protected $appends = ['favoritesCount', 'isFavorited'];
 	
     public function user(){
     	return $this->belongsTo(User::class);
@@ -34,6 +35,10 @@ class Reply extends Model
         
     }
 
+    public function unfavorite(){
+        $this->favorites()->where(['user_id'=>Auth()->user()->id])->delete();
+    }
+
     public function isFavorited(){
         if(!Auth()->user()){
             return true;
@@ -43,6 +48,10 @@ class Reply extends Model
 
     public function getFavoritesCountAttribute(){
         return $this->favorites->count();
+    }
+
+    public function getIsFavoritedAttribute(){
+        return $this->isFavorited();
     }
 
     public function path(){
