@@ -23,6 +23,8 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('flash', require('./components/FlashComponent.vue').default);
 Vue.component('reply', require('./components/ReplyComponent.vue').default);
 Vue.component('favorite', require('./components/FavoriteComponent.vue').default);
+Vue.component('replies', require('./components/RepliesComponent.vue').default);
+Vue.component('thread-view', require('./pages/Thread.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

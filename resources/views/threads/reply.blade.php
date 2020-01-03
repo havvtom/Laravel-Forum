@@ -6,10 +6,11 @@
         		<a href="{{route('profile', $reply->user->name)}}">{{$reply->user->name}}</a> said {{$reply->created_at->diffForHumans()}}
         		</h5>
         		<div>
-                    <favorite :reply="{{$reply}}">
-                        
-                    </favorite>
-        			
+                    @if(Auth()->check())
+                        <favorite :reply="{{$reply}}">
+                            
+                        </favorite>
+        			@endif
         		</div>
         	</div>
            

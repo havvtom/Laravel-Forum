@@ -15,6 +15,17 @@ class Reply extends Model
     protected $with = ['user', 'favorites'];
     protected $appends = ['favoritesCount', 'isFavorited'];
 	
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($reply){
+            $reply->favorites()->get()->each(function($favorite){
+                $favorite->delete();
+            });
+        });
+    }
+
     public function user(){
     	return $this->belongsTo(User::class);
     }
@@ -36,7 +47,10 @@ class Reply extends Model
     }
 
     public function unfavorite(){
-        $this->favorites()->where(['user_id'=>Auth()->user()->id])->delete();
+        $this->favorites()->where(['user_id'=>Auth()->user()->id])->get()->each(function($favorite){
+            $favorite->delete();
+        });
+        
     }
 
     public function isFavorited(){
