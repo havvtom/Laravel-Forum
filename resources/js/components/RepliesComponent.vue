@@ -3,28 +3,38 @@
 		<div v-for="(reply, index) in items" :key="reply.id">
 			<reply :data = "reply" @delete="remove(index)" ></reply>
 		</div>
+
+		<paginator></paginator>
+		
 		<new-reply :endpoint="endpoint" @created="add"></new-reply>
 	</div>
 </template>
 <script type="text/javascript">
+	import collection from "../mixins/collection";
 	export default{
-		props:['data'],
+		mixins:[collection],
+		created(){
+			this.fetch();
+		},
 		data(){
 			return{
-				items:this.data,
+				dataSet:false,
 				endpoint: location.pathname + '/replies'
 			}
 		},
 		methods:{
-			remove(index){
-				this.items.splice(index, 1);
-				this.$emit('removed');
-				flash('Reply was deleted');
+			fetch(){
+				axios.get(this.url())
+				.then(this.refresh);
 			},
-			add(reply){
-				this.items.push(reply);
-				this.$emit('added');
-			}
+			refresh({data}){
+				this.dataSet = data;
+				this.items = data.data
+			},
+			url(){
+				return `${location.pathname}/replies`;
+			},
+			
 		}
 	}
 </script>

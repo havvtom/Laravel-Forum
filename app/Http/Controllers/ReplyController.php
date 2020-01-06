@@ -10,8 +10,12 @@ use Illuminate\Http\Request;
 class ReplyController extends Controller
 {
 	public function __construct(){
-		$this->middleware('auth');
+		$this->middleware('auth', ['except' => 'index']);
 	}
+
+    public function index($channelId, Thread $thread){
+        return $thread->replies()->paginate(1);
+    }
 	
     public function store($channelID, Thread $thread, Request $request){
         

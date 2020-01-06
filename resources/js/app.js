@@ -26,6 +26,7 @@ Vue.component('favorite', require('./components/FavoriteComponent.vue').default)
 Vue.component('replies', require('./components/RepliesComponent.vue').default);
 Vue.component('thread-view', require('./pages/Thread.vue').default);
 Vue.component('new-reply', require('./components/NewReply.vue').default);
+Vue.component('paginator', require('./components/PaginatorComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

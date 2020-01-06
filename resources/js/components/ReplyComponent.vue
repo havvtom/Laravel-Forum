@@ -4,7 +4,7 @@
         <div class="card-header">
         	<div class="level">
         		<h5 class="flex">
-        		<a :href="'/profile/'+data.user.name" v-text="data.user.name"></a> said {{data.created_at}}
+        		<a :href="'/profile/'+data.user.name" v-text="data.user.name"></a> said <span v-text="ago"></span>
         		</h5>
         		<div v-if="signedIn">
                     
@@ -38,6 +38,7 @@
 	<!-- </reply> -->
 </template>
 <script type="text/javascript">
+	import moment from 'moment';
 	export default{
 		props:['data'],
 		data(){
@@ -55,6 +56,9 @@
 
 				return this.authorize(user => this.data.user.id == user.id);
 				// return window.App.user.id == this.data.user.id;
+			},
+			ago(){
+				return moment(this.data.created_at).fromNow()+"...";
 			}
 		},
 		methods:{

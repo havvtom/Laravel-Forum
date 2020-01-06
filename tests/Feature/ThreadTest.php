@@ -70,4 +70,14 @@ class ThreadTest extends TestCase
             ->assertDontSee($threadNotByJohn->title);
     }
 
+    public function test_a_user_can_request_all_replies_for_a_given_thread(){
+        $thread = factory(\App\Thread::class)->create();
+        $replies = factory(\App\Reply::class, 2)->create(['thread_id' => $thread->id]);
+
+        $response = $this->getJson($thread->path().'/replies')->json();
+
+        $this->assertCount(1, $response['data']);
+        $this->assertEquals(2, $response['total']);
+    }
+
 }
