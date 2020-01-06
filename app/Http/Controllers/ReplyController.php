@@ -19,12 +19,16 @@ class ReplyController extends Controller
             'body' => 'required'           
             ]);
 
-    	$thread->addReply([
+    	$reply = $thread->addReply([
 
     		'body' => $request->body,
     		'user_id' => Auth()->user()->id
 
     	]);
+
+        if(request()->expectsJson()){
+            return $reply->load('user');
+        }
 
         return redirect($thread->path())->with('flash', 'Your reply was posted successfully');
     }

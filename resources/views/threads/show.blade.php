@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<thread-view inline-template>
+<thread-view :initial-replies-count="{{$thread->replies_count}}" inline-template>
   @if (count($errors) > 0)
      <div class = "alert alert-danger">
         <ul>
@@ -34,34 +34,20 @@
                     {{$thread->body}}
                   </div>
               </div>
-              <replies :data="{{$thread->replies}}"></replies>
-              <!-- @foreach($replies as $reply)
-                  @include('threads.reply')
-              @endforeach -->
+              <replies :data="{{$thread->replies}}" @removed="repliesCount--" @added="repliesCount++"></replies>
               <!-- <div style="margin-top: 30px;">{{$replies->links()}}</div> -->
-      
-      @if(Auth::check())
-
-              <form method="POST" action="{{$thread->id.'/replies'}}">
-                  @csrf
-                 <div class="form-group">
-                  <label for="body">Body</label>
-                  <textarea name="body" id="body" class="form-control" rows=5 placeholder="Have something to say"></textarea>
-                 </div> 
-                 <button type="submit" class="btn btn-primary">Post</button>
-              </form>
+              
+           
           </div>
           <div class="col-md-4">
             <div class="card">
                   <div class="card-body">
-                    This thread was published {{$thread->created_at->diffForHumans()}} by <a href="">{{$thread->owner->name}}</a>, and currently has {{$thread->replies_count}} {{Str::plural('comment', $thread->replies_count)}}.
+                    This thread was published {{$thread->created_at->diffForHumans()}} by <a href="">{{$thread->owner->name}}</a>, and currently has <span v-text="repliesCount"></span> {{Str::plural('comment', $thread->replies_count)}}.
                   </div>
               </div>
           </div>
       </div>
-      @else
-          <p class="text-center">Please <a href="{{route('login')}}">sign in </a>here to participate in this discussion</p>
-      @endif
+      
   </div>
 </thread-view>
 @endsection

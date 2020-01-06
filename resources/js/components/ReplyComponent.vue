@@ -6,13 +6,13 @@
         		<h5 class="flex">
         		<a :href="'/profile/'+data.user.name" v-text="data.user.name"></a> said {{data.created_at}}
         		</h5>
-        		<!-- <div>
-                    @if(Auth()->check())
-                        <favorite :reply="{{$reply}}">
+        		<div v-if="signedIn">
+                    
+                        <favorite :reply="data">
                             
                         </favorite>
-        			@endif
-        		</div> -->
+        			
+        		</div>
         	</div>
            
         </div>
@@ -28,12 +28,12 @@
                 <!-- {{$reply->body}}  -->  
             </div>
         </div>
-        <!-- @can('update', $reply)
-        <div class="card-footer level">
+       <!--  @can('update', $reply) -->
+        <div class="card-footer level" v-if="canUpdate">
             <button class="btn btn-info btn-xs mr-1" @click="editing=true">Edit</button>
             <button class="btn btn-danger btn-xs mr-1" @click="destroy">Delete</button>
         </div>
-        @endcan -->
+        <!-- @endcan -->
     </div>
 	<!-- </reply> -->
 </template>
@@ -45,7 +45,16 @@
 				editing: false,
 				body: this.data.body,
 				id: this.data.id
+			}
+		},
+		computed:{
+			signedIn(){
+				return window.App.signedIn;
+			},
+			canUpdate(){
 
+				return this.authorize(user => this.data.user.id == user.id);
+				// return window.App.user.id == this.data.user.id;
 			}
 		},
 		methods:{
@@ -62,9 +71,10 @@
 			destroy(){
 				axios.delete('/replies/' + this.data.id);
 
-				$(this.$el).fadeOut(3000,()=>{
-					flash('You reply has been deleted!');
-				});
+				this.$emit('delete', this.data.id);
+				// $(this.$el).fadeOut(3000,()=>{
+				// 	flash('You reply has been deleted!');
+				// });
 				
 			}
 		}
