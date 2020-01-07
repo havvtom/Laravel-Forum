@@ -1,13 +1,13 @@
 <template>
-	<ul class="pagination">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous" rel="previous"> 
+	<ul class="pagination" v-if="shouldPaginate">
+    <li class="page-item" v-show="prevUrl">
+      <a class="page-link" href="#" aria-label="Previous" rel="previous" @click.prevent="page--"> 
         <span aria-hidden="true">&laquo;Previous</span>
       </a>
     </li>
     
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next" rel="next">
+    <li class="page-item" v-show="nextUrl">
+      <a class="page-link" href="#" aria-label="Next" rel="next"  @click.prevent="page++">
         <span aria-hidden="true">&raquo;Next</span>
       </a>
     </li>
@@ -16,6 +16,46 @@
 
 <script type="text/javascript">
 	export default{
+    props:['dataSet'],
+    data(){
+      return{
+        page: 1,
+        prevUrl: false,
+        nextUrl: false
+      }
+    },
+
+    watch:{
+      dataSet(){
+        this.page = this.dataSet.current_page;
+        this.prevUrl = this.dataSet.prev_page_url;
+        this.nextUrl = this.dataSet.next_page_url;
+      },
+
+      page(){
+        this.broadcast().updateUrl();
+      }
+    },
+
+    methods: {
+
+      broadcast(){
+      
+        return this.$emit('changed', this.page);
+        
+      },
+
+      updateUrl(){
+
+        history.pushState(null, null, '?page='+this.page)
+      }
+    },
+
+    computed: {
+      shouldPaginate(){
+        return !!this.prevUrl || !!this.nextUrl;
+      }
+    }
 
 	}
 </script>

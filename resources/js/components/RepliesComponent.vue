@@ -4,9 +4,9 @@
 			<reply :data = "reply" @delete="remove(index)" ></reply>
 		</div>
 
-		<paginator></paginator>
+		<paginator :dataSet="dataSet" @changed="fetch"></paginator>
 		
-		<new-reply :endpoint="endpoint" @created="add"></new-reply>
+		<new-reply @created="add"></new-reply>
 	</div>
 </template>
 <script type="text/javascript">
@@ -19,20 +19,24 @@
 		data(){
 			return{
 				dataSet:false,
-				endpoint: location.pathname + '/replies'
 			}
 		},
 		methods:{
-			fetch(){
-				axios.get(this.url())
+			fetch(page){
+				axios.get(this.url(page))
 				.then(this.refresh);
 			},
 			refresh({data}){
 				this.dataSet = data;
 				this.items = data.data
 			},
-			url(){
-				return `${location.pathname}/replies`;
+			url(page){
+				if(!page){
+					let query = location.search.match(/page=(\d+)/);
+
+					page = query ? query[1] : 1;
+				}
+				return `${location.pathname}/replies?page=${page}`;
 			},
 			
 		}
