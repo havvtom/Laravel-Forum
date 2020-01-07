@@ -16,10 +16,6 @@ class Thread extends Model
 
         parent::boot();
 
-        static::addGlobalScope('replyCount', function(Builder $builder){
-            $builder->withCount('replies');
-        });
-
         static::deleting(function($thread){
             $thread->replies->each->delete();
         });
@@ -28,8 +24,8 @@ class Thread extends Model
     }
     
     public function path(){
-    	// return 'threads/'.$this->channel->slug.'/'.$this->id;
-        return route('thread', [$this->channel->slug, $this->id]);
+    	return 'threads/'.$this->channel->slug.'/'.$this->id;
+        // return route('thread', [$this->channel->slug, $this->id]);
     }
 
     public function replies(){
@@ -44,7 +40,9 @@ class Thread extends Model
 
     public function addReply($reply){
     	
-    	return $this->replies()->create($reply);
+    	$reply = $this->replies()->create($reply);
+
+        return $reply;
     }
 
     public function channel(){

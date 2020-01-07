@@ -65,6 +65,7 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                               <a class="dropdown-item" href="/threads">All Threads</a>
                               <a class="dropdown-item" href="/threads?popular=1">Popular</a> 
+                              <a class="dropdown-item" href="/threads?unanswered=1">Unanswered</a>
                               @if(Auth::check()) 
                               <a class="dropdown-item" href="/threads?by={{Auth::user()->name}}">My Threads</a>@endif             
                              

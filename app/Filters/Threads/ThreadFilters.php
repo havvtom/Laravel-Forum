@@ -11,5 +11,6 @@ class ThreadFilters extends FiltersAbstract{
 
 		'by' => ByFilter::class,
 		'popular' => PopularFilter::class,
+		'unanswered' =>UnAnsweredFilter::class,
 	];
 }

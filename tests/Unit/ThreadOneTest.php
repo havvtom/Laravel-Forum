@@ -39,16 +39,6 @@ class ThreadTest extends TestCase
         	->assertSee($this->thread->title);
     }
 
-    public function test_a_user_can_see_replies_associated_with_thread(){
-
-    	$reply = factory(\App\Reply::class)->create(['thread_id' => $this->thread->id]);
-
-    	$response= $this->get('/threads/'.$this->thread->channel->slug.'/'.$this->thread->id)
-
-        	->assertSee($reply->body);
-
-    }
-
     public function test_a_thread_can_have_replies(){
 
     	$this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->thread->replies);
@@ -57,6 +47,15 @@ class ThreadTest extends TestCase
     public function test_a_thread_has_an_owner(){
 
     	$this->assertInstanceOf('App\User', $this->thread->owner);
+    }
+
+    public function test_a_user_can_filter_threads_by_unanswered(){
+        $thread = factory(\App\Thread::class)->create();
+        $reply = factory(\App\Reply::class)->create(['thread_id' => $thread->id]);
+
+        $response = $this->getJson('threads?unanswered=1')->json();
+
+        $this->assertCount(1, $response);
     }
 
 }

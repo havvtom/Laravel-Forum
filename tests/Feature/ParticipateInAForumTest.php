@@ -35,10 +35,9 @@ class ParticipateInAForumTest extends TestCase
         $reply = factory(\App\Reply::class)->make();
         $this->post($thread->path().'/replies', $reply->toArray());
 
-        //their reply should be visible on the page
+        $this->assertDatabaseHas('replies', ['body' => $reply->body]);
 
-        $this->get($thread->path())
-            ->assertSee($reply->body);
+        $this->assertEquals(1, $thread->fresh()->replies_count);
 
     }
 
@@ -77,6 +76,8 @@ class ParticipateInAForumTest extends TestCase
         $this->delete('/replies/'.$reply->id);
 
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+
+        $this->assertEquals(0, $reply->thread->fresh()->replies_count);
 
     }
 
