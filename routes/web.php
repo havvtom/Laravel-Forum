@@ -27,7 +27,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionController@store');
+Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionController@store')->middleware('auth');
 
 Route::post('/threads/{channel}/{thread}/replies', 'ReplyController@store');
 

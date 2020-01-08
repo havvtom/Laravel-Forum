@@ -23,10 +23,19 @@ class SubscribeToThreadsTest extends TestCase
 
     public function test_a_user_can_subscribe_to_threads(){
 
+        $user = factory(\App\User::class)->create();
+        $this->be($user);
+
         $thread = factory(\App\Thread::class)->create();
 
         $this->post($thread->path().'/subscriptions');
 
-        $this->assertCount(1, $thread->subscriptions);
+        $thread->addReply([
+
+            'user_id' => Auth()->user()->id,
+            'body'      => "Some reply here"
+        ]);
+
+        // $this->assertCount(1, Auth()->user()->notifications());
     }
 }
