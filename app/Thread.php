@@ -5,12 +5,15 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filters\Threads\ThreadFilters;
+use App\ThreadSubscriptions;
 
 class Thread extends Model
 {
     use RecordsActivityTrait;
 
     protected $guarded = [];
+
+    protected $appends = ['isSubscribedTo'];
 
     protected static function boot(){
 
@@ -24,8 +27,9 @@ class Thread extends Model
     }
     
     public function path(){
+
     	return 'threads/'.$this->channel->slug.'/'.$this->id;
-        // return route('thread', [$this->channel->slug, $this->id]);
+        
     }
 
     public function replies(){
@@ -59,14 +63,21 @@ class Thread extends Model
         $this->subscriptions()->create(['user_id' => $userId ?: Auth()->user()->id]);
     }
 
-    public function unsubscribe($userId){
+    public function unsubscribe($userId = null){
 
         $this->subscriptions()
-                            ->where('user_id', $userId ?: Auth()->user()->id)
+                            ->where(['user_id' => $userId ?: Auth()->user()->id])
                             ->delete();
     }
 
     public function subscriptions(){
         return $this->hasMany(ThreadSubscriptions::class);
+    }
+
+    public function getIsSubscribedToAttribute(){
+
+        return $this->subscriptions()
+                        ->where('user_id', Auth()->user()->id)
+                        ->exists();
     }
 }
