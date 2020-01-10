@@ -20,6 +20,6 @@ class UserNotifications extends Controller
 
     public function index(){
 
-    	return Auth()->user()->notifications;
+    	return Auth()->user()->unreadNotifications;
     }
 }

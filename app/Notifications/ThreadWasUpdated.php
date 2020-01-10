@@ -22,7 +22,8 @@ class ThreadWasUpdated extends Notification
     
     public function __construct($thread, $reply)
     {
-        //
+        $this->thread = $thread;
+        $this->reply = $reply;
     }
 
     /**
@@ -58,8 +59,11 @@ class ThreadWasUpdated extends Notification
      */
     public function toArray($notifiable)
     {
+        
         return [
-            'message' => 'Temporay placeholder'
+            'message' => $this->reply->user->name. ' replied to '. $this->thread->title,
+            'link' => $this->reply->path()
         ];
     }
 }
+// "vendor\bin\phpunit" --filter NotificationsTest
