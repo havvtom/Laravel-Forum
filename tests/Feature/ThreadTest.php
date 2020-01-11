@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class ThreadTest extends TestCase
@@ -80,4 +81,7 @@ class ThreadTest extends TestCase
         $this->assertEquals(2, $response['total']);
     }
 
+    
+
 }
+

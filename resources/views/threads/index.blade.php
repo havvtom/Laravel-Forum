@@ -9,7 +9,17 @@
                 <div class="card-header">
                     <div class="level">
                         <h4 class="flex">
-                            <a href="{{route ('thread', [$thread->channel->slug, $thread->id])}}">{{$thread->title}}</a>
+                            <a href="{{route ('thread', [$thread->channel->slug, $thread->id])}}">
+                                @if($thread->hasUpdatesFor(Auth()->user()))
+
+                                    <strong>{{$thread->title}}</strong>
+
+                                @else
+
+                                    {{$thread->title}}
+
+                                @endif
+                            </a>
                         </h4>
                         <strong><a href="{{route ('thread', [$thread->channel->slug, $thread->id])}}">{{$thread->replies_count}} {{Str::plural('reply', $thread->replies_count)}}</a></strong>
                     </div>

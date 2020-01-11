@@ -50,16 +50,8 @@ class Thread extends Model
 
         //prepare notification for all subscribers
 
-        event( new ThreadHasNewReply ($this, $reply));
-
-        // $this->subscriptions
-
-        //                 ->where( 'user_id', '!=', $reply->user_id )
-
-        //                 ->each
-
-        //                 ->notify($reply);
-                 
+      
+        $this->notifySubscribers($reply);             
       
 
         return $reply;
@@ -76,7 +68,7 @@ class Thread extends Model
 
     public function subscribe($userId = null){
 
-        $this->subscriptions()->create(['user_id' => $userId ?: Auth()->user()->id]);
+        return $this->subscriptions()->create(['user_id' => $userId ?: Auth()->user()->id]);
     }
 
     public function unsubscribe($userId = null){
@@ -95,5 +87,25 @@ class Thread extends Model
         return $this->subscriptions()
                         ->where('user_id', Auth()->user()->id)
                         ->exists();
+    }
+
+    public function notifySubscribers($reply){
+
+        $this->subscriptions
+
+                    ->where( 'user_id', '!=', $reply->user_id )
+
+                    ->each
+
+                    ->notify($reply);
+    }
+
+    public function hasUpdatesFor(){
+
+        //look in the cache for a proper key
+
+        //compare carbon instance with $thread->updated_at
+
+        return $this->updated_at > cache($key);
     }
 }
