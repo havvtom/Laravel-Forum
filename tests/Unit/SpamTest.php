@@ -20,13 +20,24 @@ class SpamTest extends TestCase
 
     public function test_it_validates_spam(){
 
-    	$spam = new \App\Spam();
+    	$spam = new \App\Inspections\Spam();
 
     	$this->assertFalse($spam->detect('Innocent reply'));
 
-    	$this->expectException('Exception');
+    	// $this->expectException('Exception');
 
-    	$spam->detect('Yahoo Customer Support');
+    	// $spam->detect('Yahoo Customer Support');
+    }
+
+    public function test_it_checks_for_any_key_held_down(){
+
+        $spam = new \App\Inspections\Spam(); 
+
+        $this->expectException('Exception');
+
+        $spam->detect('Hello world aaaaaa');
+
+
     }
 }
  //"vendor\bin\phpunit" --filter SpamTest
