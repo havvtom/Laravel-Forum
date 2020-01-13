@@ -83,10 +83,14 @@ class Thread extends Model
     }
 
     public function getIsSubscribedToAttribute(){
+        if(Auth()->check())
 
-        return $this->subscriptions()
-                        ->where('user_id', Auth()->user()->id)
-                        ->exists();
+            { return $this->subscriptions()
+                               ->where('user_id', Auth()->user()->id)
+                               ->exists();
+                     }
+                               
+        return null;
     }
 
     public function notifySubscribers($reply){
@@ -100,12 +104,14 @@ class Thread extends Model
                     ->notify($reply);
     }
 
-    public function hasUpdatesFor(){
+    public function hasUpdatesFor($user = null){
 
+        $user = $user ?: Auth()->user();
         //look in the cache for a proper key
 
         //compare carbon instance with $thread->updated_at
-
+        $key = sprintf("users.%s.visits.%s", Auth()->user()->id, $this->id);
+       
         return $this->updated_at > cache($key);
     }
 }

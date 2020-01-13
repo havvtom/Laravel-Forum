@@ -10,7 +10,7 @@
                     <div class="level">
                         <h4 class="flex">
                             <a href="{{route ('thread', [$thread->channel->slug, $thread->id])}}">
-                                @if($thread->hasUpdatesFor(Auth()->user()))
+                                @if(Auth()->check() && $thread->hasUpdatesFor(Auth()->user()))
 
                                     <strong>{{$thread->title}}</strong>
 

@@ -30,7 +30,7 @@ class FavoriteTest extends TestCase
         $reply = factory(\App\Reply::class)->create();
 
         $response = $this->post('/replies/'.$reply->id.'/favorites');
-        $response->assertStatus(200);
+        $response->assertStatus(302);
 
         $this->assertCount(1, $reply->favorites);
     }

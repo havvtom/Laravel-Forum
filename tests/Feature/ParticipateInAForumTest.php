@@ -108,6 +108,23 @@ class ParticipateInAForumTest extends TestCase
 
     }
 
+    // public function test_replies_containing_spams_may_not_be_created(){
+
+    //     $user = factory(\App\User::class)->create();
+    //     $this->be($user);
+
+    //     $thread = factory(\App\Thread::class)->create();
+    //     $reply = factory(\App\Reply::class)->make(['body' => 'Yahoo Customer Support']);
+
+    //     $this->expectException(\Exception::class);
+
+    //     $this->post($thread->path().'/replies', $reply->toArray());
+
+        
+    // }
+
 }
+
+
 
     

@@ -53,7 +53,7 @@ class ThreadTest extends TestCase
         $thread = factory(\App\Thread::class)->create();
         $reply = factory(\App\Reply::class)->create(['thread_id' => $thread->id]);
 
-        $response = $this->getJson('threads?unanswered=1')->json();
+        $response = $this->getJson('/threads?unanswered=1')->json();
 
         $this->assertCount(1, $response);
     }
@@ -77,4 +77,21 @@ class ThreadTest extends TestCase
         $this->assertCount( 0, $thread->subscriptions);
     }
 
+    public function test_a_thread_can_check_if_an_authenticated_user_has_read_all_replies(){
+
+        $this->be($user = factory(\App\User::class)->create());
+
+        $thread = factory(\App\Thread::class)->create();
+
+        $this->assertTrue($thread->hasUpdatesFor());
+
+        $key = Auth()->user()->visitedThreadCacheKey($thread);
+       
+        cache()->forever($key, \Carbon\Carbon::now());
+
+        $this->assertFalse($thread->hasUpdatesFor());
+    }
+
 }
+
+// "vendor\bin\phpunit" --filter  test_a_thread_can_check_if_an_authenticated_user_has_read_all_replies

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Thread;
 use App\Reply;
+use Carbon\Carbon;
 use App\Channel;
 use Illuminate\Http\Request;
 
@@ -73,6 +74,14 @@ class ThreadController extends Controller
      */
     public function show( $channelId, Thread $thread)
     {     
+        //record that a user visited this page 
+        //record the time stamp
+        if(Auth()->check()){
+
+            Auth()->user()->visitedThreadCacheKey($thread);
+            
+        }
+        
 
         return view('threads.show', compact('thread'));
 
