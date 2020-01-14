@@ -43,6 +43,9 @@
 
 					this.$emit('created', response.data)
 				})
+				.catch(error=>{
+					console.log(error.response);
+				})
 			}
 		}
 

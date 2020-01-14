@@ -20,22 +20,29 @@ class ReplyController extends Controller
     }
 	
     public function store($channelID, Thread $thread, Request $request){
+        try {
+
+            $this->validateReply();
         
-        $this->validateReply();
+
+        $reply = $thread->addReply([
+
+            'body' => $request->body,
+            'user_id' => Auth()->user()->id
+
+        ]);
+
         
+        return $reply->load('user');
+            
+        } catch (\Exception $e) {
+            
+            return response('Sorry, your reply could not be saved this time.', 422);
 
-    	$reply = $thread->addReply([
-
-    		'body' => $request->body,
-    		'user_id' => Auth()->user()->id
-
-    	]);
-
-        if(request()->expectsJson()){
-            return $reply->load('user');
         }
+        
+        
 
-        return redirect($thread->path())->with('flash', 'Your reply was posted successfully');
     }
 
     public function destroy(Reply $reply){
