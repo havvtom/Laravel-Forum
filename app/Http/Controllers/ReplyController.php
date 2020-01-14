@@ -20,6 +20,7 @@ class ReplyController extends Controller
     }
 	
     public function store($channelID, Thread $thread, Request $request){
+
         try {
 
             $this->validateReply();
@@ -58,13 +59,22 @@ class ReplyController extends Controller
         return back();
     }
 
-    public function update(Reply $reply, Request $request){
+    public function update(Reply $reply){
 
         $this->authorize('update', $reply);
 
-        $this->validateReply();
+        try {            
+
+            $this->validateReply();
         
-        $reply->update(['body' => request('body')]);
+            $reply->update(['body' => request('body')]);
+            
+        } catch (\Exception $e) {
+            
+            return response('Sorry, your reply could not be saved this time.', 422);
+        }
+
+        
     }
 
     protected function validateReply(){

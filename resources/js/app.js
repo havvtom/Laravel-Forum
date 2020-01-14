@@ -35,7 +35,7 @@ Vue.component('user-notifications', require('./components/UserNotifications.vue'
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
  window.events = new Vue();
- window.flash = function(message){window.events.$emit('flash', message)};
+ window.flash = function(message, level='success'){window.events.$emit('flash', {message, level})};
  Vue.prototype.authorize = function(handler){
  	let user = window.App.user;
 
