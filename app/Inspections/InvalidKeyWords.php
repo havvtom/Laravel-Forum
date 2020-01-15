@@ -17,6 +17,7 @@ class InvalidKeywords{
 				if(Strrpos($body, $keyword) !== false){
 
 	            throw new \Exception("Your message contains spam.");
+
 	            
 	        }
 		}

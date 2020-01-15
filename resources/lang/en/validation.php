@@ -133,6 +133,14 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+
+        'body' => [
+            'spamfree' => 'Spam has been detected on the body'
+        ],
+
+        'title' => [
+            'spamfree' => 'Spam has been detected on the title'
+        ]
     ],
 
     /*

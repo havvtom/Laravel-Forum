@@ -23,18 +23,20 @@ class ReplyController extends Controller
 
         try {
 
-            $this->validateReply();
+                $this->validate(request(),[            
+                'body' => 'required|spamfree'           
+                ]);
+            
+
+                $reply = $thread->addReply([
+
+                'body' => $request->body,
+                'user_id' => Auth()->user()->id
+
+            ]);
+
         
-
-        $reply = $thread->addReply([
-
-            'body' => $request->body,
-            'user_id' => Auth()->user()->id
-
-        ]);
-
-        
-        return $reply->load('user');
+            return $reply->load('user');
             
         } catch (\Exception $e) {
             
@@ -65,7 +67,9 @@ class ReplyController extends Controller
 
         try {            
 
-            $this->validateReply();
+            $this->validate(request(),[            
+            'body' => 'required|spamfree'           
+            ]);
         
             $reply->update(['body' => request('body')]);
             
@@ -77,12 +81,5 @@ class ReplyController extends Controller
         
     }
 
-    protected function validateReply(){
-
-        $this->validate(request(),[            
-            'body' => 'required'           
-            ]);
-
-        resolve(Spam::class)->detect(request('body'));
-    }
+   
 }
