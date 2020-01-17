@@ -23,20 +23,28 @@ class ReplyController extends Controller
 
         try {
 
-                $this->validate(request(),[            
-                'body' => 'required|spamfree'           
-                ]);
-            
+            $lastReply = Auth()->user()->lastReply;
 
-                $reply = $thread->addReply([
+                
+              if( !$lastReply || ! $lastReply->wasJustPublished()) { 
+                              $this->validate(request(),[            
+                              'body' => 'required|spamfree'           
+                              ]);
+                          
+              
+                              $reply = $thread->addReply([
+              
+                              'body' => $request->body,
+                              'user_id' => Auth()->user()->id
+              
+                          ]);
+              
+                      
+                          return $reply->load('user');
+                      }else{
 
-                'body' => $request->body,
-                'user_id' => Auth()->user()->id
-
-            ]);
-
-        
-            return $reply->load('user');
+                        return response('You are posting too frequently. Please take a break', 426);
+                      }
             
         } catch (\Exception $e) {
             

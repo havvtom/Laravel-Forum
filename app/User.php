@@ -59,4 +59,9 @@ class User extends Authenticatable
         cache()->forever($key, Carbon::now());
     }
 
+    public function lastReply(){
+
+        return $this->hasOne(Reply::class)->latest();
+    }
+
 }

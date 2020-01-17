@@ -108,23 +108,38 @@ class ParticipateInAForumTest extends TestCase
 
     }
 
-    // public function test_replies_containing_spams_may_not_be_created(){
+    public function test_replies_containing_spams_may_not_be_created(){
 
-    //     $user = factory(\App\User::class)->create();
-    //     $this->be($user);
+        $user = factory(\App\User::class)->create();
+        $this->be($user);
 
-    //     $thread = factory(\App\Thread::class)->create();
-    //     $reply = factory(\App\Reply::class)->make(['body' => 'Yahoo Customer Support']);
+        $thread = factory(\App\Thread::class)->create();
+        $reply = factory(\App\Reply::class)->make(['body' => 'yahoo customer support']);
 
-    //     $this->expectException(\Exception::class);
-
-    //     $this->post($thread->path().'/replies', $reply->toArray());
-
+        $this->post($thread->path().'/replies', $reply->toArray())
+                ->assertStatus(422);
         
-    // }
+    }
+
+    public function test_a_user_can_only_reply_once_a_minute(){
+
+        $this->be($user = factory(\App\User::class)->create());
+
+        $thread = factory(\App\Thread::class)->create();
+
+        $reply = factory(\App\Reply::class)->make([
+
+                'thread_id' => $thread->id,
+                'body' => 'My cool reply'
+
+        ]);
+
+        $this->post($thread->path().'/replies', $reply->toArray())
+                ->assertStatus(201);
+
+    }
 
 }
 
-
-
+//"vendor\bin\phpunit" --filter test_a_user_can_fetch_the_most_recent_reply
     

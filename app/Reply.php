@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\RecordsActivityTrait;
+use Carbon\Carbon;
 
 
 class Reply extends Model
@@ -79,6 +80,11 @@ class Reply extends Model
     public function path(){
        $url = route('thread', [$this->thread->channel->slug, $this->thread->id])."#reply-".$this->id;
        return $url;
+    }
+
+    public function wasJustPublished(){
+
+        return $this->created_at->gt(Carbon::now()->subMinute());
     }
 }
 
