@@ -27,8 +27,11 @@ class ReplyController extends Controller
 
                 
               if( !$lastReply || ! $lastReply->wasJustPublished()) { 
-                              $this->validate(request(),[            
-                              'body' => 'required|spamfree'           
+
+                              $this->validate(request(),[  
+
+                              'body' => 'required|spamfree'   
+
                               ]);
                           
               
@@ -38,6 +41,9 @@ class ReplyController extends Controller
                               'user_id' => Auth()->user()->id
               
                           ]);
+
+                              //inspect the body for any mentioned name
+                              //for each mentioned user, notify them 
               
                       
                           return $reply->load('user');
