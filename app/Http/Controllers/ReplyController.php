@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 use App\Thread;
 use Illuminate\Support\Str;
 use App\Reply;
+use App\User;
 use App\Inspections\Spam;
+use App\Notifications\YouWereMentioned;
 
 
 use Illuminate\Http\Request;
@@ -42,8 +44,7 @@ class ReplyController extends Controller
               
                           ]);
 
-                              //inspect the body for any mentioned name
-                              //for each mentioned user, notify them 
+                              
               
                       
                           return $reply->load('user');

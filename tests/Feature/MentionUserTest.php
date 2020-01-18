@@ -40,7 +40,7 @@ class MentionUserTest extends TestCase
         $reply = factory(\App\Reply::class)->make([
 
             'user_id' => $John->id,
-            'body'  => '@JaneDoe look at this'
+            'body'  => '@JaneDoe look at this.'
 
         ]);
 
