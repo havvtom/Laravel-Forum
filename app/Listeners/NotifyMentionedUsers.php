@@ -31,20 +31,20 @@ class NotifyMentionedUsers
         //inspect the body for any mentioned name
         
 
-                              preg_match_all('/\@([^\s\.]+)/', $event->reply->body, $matches);
-                              
-                              //for each mentioned user, notify them 
+          // preg_match_all('/\@([^\s\.]+)/', $event->reply->body, $matches);
+        $mentionedUsers =  $event->reply->mentionedUsers();                
+          //for each mentioned user, notify them 
 
-                              $names = $matches[1];
+        $names = $mentionedUsers;
 
-                              foreach($names as $name){
+        foreach($names as $name){
 
-                                $user = User::whereName($name)->first();
+            $user = User::whereName($name)->first();
 
-                                if($user){
+            if($user){
 
-                                    $user->notify(new YouWereMentioned($event->reply));
-                                }
-                              }
+            $user->notify(new YouWereMentioned($event->reply));
+        }
+      }
     }
 }
