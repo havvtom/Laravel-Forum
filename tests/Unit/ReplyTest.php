@@ -48,4 +48,20 @@ class ReplyTest extends TestCase
 
     	$this->assertEquals(['JaneDoe'], $reply->mentionedUsers() );
     }
+
+    public function test_it_wraps_mentioned_users_within_anchor_tags(){
+
+
+        $reply = factory(\App\Reply::class)->create([
+
+            'body' => "Hello @Jane-Doe"
+
+        ]);
+
+        $this->assertEquals(
+            'Hello <a href="/profiles/Jane-Doe">@Jane-Doe</a>', $reply->body
+        );
+    }
 }
+
+//"vendor\bin\phpunit" --filter test_it_wraps_mentioned_users_within_anchor_tags

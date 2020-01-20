@@ -4,7 +4,7 @@
         <div class="card-header">
         	<div class="level">
         		<h5 class="flex">
-        		<a :href="'/profile/'+data.user.name" v-text="data.user.name"></a> said <span v-text="ago"></span>
+        		<a :href="'/profiles/'+data.user.name" v-text="data.user.name"></a> said <span v-text="ago"></span>
         		</h5>
         		<div v-if="signedIn">
                     
@@ -24,7 +24,7 @@
                 <button class="btn btn-xs btn-primary" @click="update">Update</button>
                 <button class="btn btn-xs btn-link" @click="editing=false">Cancel</button>
             </div>
-            <div v-else v-text="body">
+            <div v-else v-html="body">
                 <!-- {{$reply->body}}  -->  
             </div>
         </div>

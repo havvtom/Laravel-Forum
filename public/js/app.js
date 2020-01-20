@@ -56265,7 +56265,7 @@ var render = function() {
       _c("div", { staticClass: "level" }, [
         _c("h5", { staticClass: "flex" }, [
           _c("a", {
-            attrs: { href: "/profile/" + _vm.data.user.name },
+            attrs: { href: "/profiles/" + _vm.data.user.name },
             domProps: { textContent: _vm._s(_vm.data.user.name) }
           }),
           _vm._v(" said "),
@@ -56326,7 +56326,7 @@ var render = function() {
               [_vm._v("Cancel")]
             )
           ])
-        : _c("div", { domProps: { textContent: _vm._s(_vm.body) } })
+        : _c("div", { domProps: { innerHTML: _vm._s(_vm.body) } })
     ]),
     _vm._v(" "),
     _vm.canUpdate
