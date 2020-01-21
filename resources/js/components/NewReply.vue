@@ -21,17 +21,53 @@
 	</div>
 </template>
 <script type="text/javascript">
+	import Tribute from 'tributejs';
 	export default{
 		
 		data(){
 			return{
 				body:     '',
+				values : []
 			}
 		},
 		computed:{
 			signedIn(){
 				return window.App.signedIn;
 			}
+		},
+		mounted(){
+			var tribute = new Tribute({
+
+			  values: function (text, cb) {
+
+    			remoteSearch(text, users => cb(users));
+
+  					},
+  					lookup: 'name',
+
+  					fillAttr: 'name'
+				});
+
+			function remoteSearch(text, cb) {
+				  var URL = '/api/users';
+				  var xhr = new XMLHttpRequest();
+				  xhr.onreadystatechange = function() {
+				    if (xhr.readyState === 4) {
+				      if (xhr.status === 200) {
+				        var data = JSON.parse(xhr.responseText);
+				        cb(data);
+				      } else if (xhr.status === 403) {
+				        cb([]);
+				      }
+				    }
+				  };
+				  xhr.open("GET", URL + "?name=" + text, true);
+				  xhr.send();
+				};
+			
+  	tribute.attach(document.getElementById("body"));
+
+			
 		},
 		methods:{
 			addReply(){
@@ -46,8 +82,10 @@
 				.catch(error=>{
 					flash(error.response.data, 'danger');
 				})
-			}
-		}
+			},
+
+			
+						}
 
 	}
 </script>

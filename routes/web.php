@@ -52,3 +52,5 @@ Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotification
 Route::delete('/replies/{reply}', 'ReplyController@destroy')->name('delete_reply');
 
 Route::patch('/replies/{reply}', 'ReplyController@update');
+
+Route::get('api/users', 'Api\UsersController@index');
