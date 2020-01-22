@@ -21,11 +21,11 @@ class ThreadController extends Controller
     public function index($channelSlug = null, Request $request)
     {
         if($channelSlug){
-            $channel = Channel::where('slug', $channelSlug)->first();
-            $threads = $channel->threads;          
+            $channelId = Channel::where('slug', $channelSlug)->first()->id;
+            $threads = Thread::where('channel_id', $channelId)->paginate(25);          
 
         }else{
-           $threads = Thread::with('channel')->latest()->filter($request)->get(); 
+           $threads = Thread::with('channel')->latest()->filter($request)->paginate(25); 
        }       
         
         return view('threads.index', compact('threads'));
