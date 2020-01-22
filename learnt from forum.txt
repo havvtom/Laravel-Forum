@@ -1,0 +1,33 @@
+episode 58
+
+- put required on all input fields
+- had to change to form submit for editing reply so that the required is not rendered useless
+- had to change back to remove form and restore it back 
+- page was refreshing after hitting update
+- actually no changes done
+
+
+episode 59
+
+
+- setting anchor tags on the mentioned user name
+- use preg_match
+- setting a body attribute
+- matching anything after the @ symbol until you get to space(*need to look at regular expressions*)
+- had to change v-text in th reply vue compnent so that the anchor tags work
+
+episode 60
+
+- instant search trial with At.js which has not been maintained
+- should switch to tribute/zurb
+- managed to use tribute/zurb
+
+episode 63
+
+-Laravel can fake data using UploadedFile
+-There is also a fake storage for the uploaded images
+-This is used for testing uploading an avatar
+-UploadedFile::fake()->image('avatar.jpg)
+- Add these to the test file(
+	use Illuminate\Support\Facades\Storage;
+	use Illuminate\Http\UploadedFile;)
