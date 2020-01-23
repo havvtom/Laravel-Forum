@@ -31,3 +31,4 @@ episode 63
 - Add these to the test file(
 	use Illuminate\Support\Facades\Storage;
 	use Illuminate\Http\UploadedFile;)
+- Added an avatar_path column in users table, and also added it to fillable in Users model

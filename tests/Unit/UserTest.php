@@ -39,6 +39,17 @@ class UserTest extends TestCase
 
 		$this->assertFalse($reply->wasJustPublished());
     }
+
+    public function test_a_user_can_determine_their_avatar_path(){
+
+        $this->be($user = factory(\App\User::class)->create());
+
+        $this->assertEquals('avatars/default.jpg', $user->avatar());
+
+        $this->be($user = factory(\App\User::class)->create(['avatar_path' => 'avatars/me.jpg']));
+
+        $this->assertEquals('avatars/me.jpg', $user->avatar());
+    }
 }
 
 //"vendor\bin\phpunit" --filter UserTest

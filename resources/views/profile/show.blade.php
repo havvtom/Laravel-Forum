@@ -11,8 +11,17 @@
 				</h1>
 
 				@can('update', $profileUser)
-					FORM HERE
+
+					<form method="POST" action="{{route('avatar', $profileUser)}}" enctype="multipart/form-data">
+						@csrf
+						<input type="file" name="avatar">
+
+						<button class="btn btn-primary">Add Avatar</button>
+					</form>
+
 				@endcan
+
+				<img src="{{asset('/storage/'.$profileUser->avatar())}}" width="50" height="50">
 			</div>
 			<div>
 			

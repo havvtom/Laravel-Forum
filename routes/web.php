@@ -55,4 +55,4 @@ Route::patch('/replies/{reply}', 'ReplyController@update');
 
 Route::get('api/users', 'Api\UsersController@index');
 
-Route::post('/api/users/{user}/avatar', 'Api\AvatarsController@store');
+Route::post('/api/users/{user}/avatar', 'Api\AvatarsController@store')->name('avatar');
