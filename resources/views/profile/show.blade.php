@@ -9,6 +9,10 @@
 					{{$profileUser->name}}
 					<small>since {{$profileUser->created_at->diffForHumans()}}</small>
 				</h1>
+
+				@can('update', $profileUser)
+					FORM HERE
+				@endcan
 			</div>
 			<div>
 			
