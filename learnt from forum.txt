@@ -32,3 +32,18 @@ episode 63
 	use Illuminate\Support\Facades\Storage;
 	use Illuminate\Http\UploadedFile;)
 - Added an avatar_path column in users table, and also added it to fillable in Users model
+
+
+episode 64
+
+-learnt how to link the storage files by using the command (php artisan storage:link)
+- for the link to work had to get the solution from stackoverflow 
+- src="/storage/{{$profileUser->avatar_path}}" or most preferably src="{{asset('/storage/'.$profileUser->avatar_path)}}"
+- made an avatar path in the user model
+
+
+episode 65
+
+- there is an authorize method use in app.js
+- it compares the profileId against the authenticated userId
+- used computed properties to invoke the function

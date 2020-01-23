@@ -25,7 +25,7 @@ class AvatarsController extends Controller
 
     	]);
 
-    	return back();
+    	return response([], 204);
 
     }
 }
