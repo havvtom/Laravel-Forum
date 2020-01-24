@@ -47,3 +47,8 @@ episode 65
 - there is an authorize method use in app.js
 - it compares the profileId against the authenticated userId
 - used computed properties to invoke the function
+- learnt local registration of vue components
+- getAvatarPathAttribute goes into the database and searches for avatar_path column and the result can be passes on as an argument
+- FileReader is used in javascript and can assist in uploading the image instantly
+- bit confused with inserting an image-upload component into the AvatarCompnent
+
