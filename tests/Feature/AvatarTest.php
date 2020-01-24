@@ -54,7 +54,7 @@ class AvatarTest extends TestCase
 
         ]);
 
-        Storage::disk('public')->assertExists('avatars/'.$file->hashName());
+        Storage::disk('public')->assertExists(('avatars/'.$file->hashName()));
 
         $this->assertEquals('avatars/'.$file->hashName(), Auth()->user()->avatar_path);
 

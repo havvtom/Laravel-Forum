@@ -44,7 +44,7 @@ class UserTest extends TestCase
 
         $this->be($user = factory(\App\User::class)->create());
 
-        $this->assertEquals('avatars/default.jpg', $user->avatar());
+        $this->assertEquals('images/avatars/default.png', $user->avatar());
 
         $this->be($user = factory(\App\User::class)->create(['avatar_path' => 'avatars/me.jpg']));
 
