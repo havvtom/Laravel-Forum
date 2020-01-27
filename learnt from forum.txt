@@ -52,3 +52,7 @@ episode 65
 - FileReader is used in javascript and can assist in uploading the image instantly
 - bit confused with inserting an image-upload component into the AvatarCompnent
 
+episode 66
+
+- Using Redis for trending threads
+

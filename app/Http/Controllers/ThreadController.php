@@ -7,6 +7,7 @@ use App\Reply;
 use Carbon\Carbon;
 use App\Channel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class ThreadController extends Controller
 {
@@ -82,7 +83,12 @@ class ThreadController extends Controller
             Auth()->user()->visitedThreadCacheKey($thread);
             
         }
-        
+         Redis::zincrby('trending_threads', 1, json_encode([
+
+            'title' => $thread->title,
+            'path' => $thread->path()
+
+         ]));
 
         return view('threads.show', compact('thread'));
 
