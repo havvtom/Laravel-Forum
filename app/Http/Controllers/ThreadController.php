@@ -27,9 +27,11 @@ class ThreadController extends Controller
 
         }else{
            $threads = Thread::with('channel')->latest()->filter($request)->paginate(25); 
-       }       
+       }    
+
+     $trending = array_map('json_decode',Redis::zrevrange('trending_threads', 0, 4));
         
-        return view('threads.index', compact('threads'));
+        return view('threads.index', compact('threads', 'trending'));
     }
 
     /**
@@ -83,6 +85,7 @@ class ThreadController extends Controller
             Auth()->user()->visitedThreadCacheKey($thread);
             
         }
+        // Redis::set('name', 'Taylor');
          Redis::zincrby('trending_threads', 1, json_encode([
 
             'title' => $thread->title,

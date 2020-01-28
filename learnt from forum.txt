@@ -55,4 +55,8 @@ episode 65
 episode 66
 
 - Using Redis for trending threads
+- Need to change the database.php file in config
+- set redis client to predis after installing redis and requiring it through composer
+- commented the line prefix in options in the database.php file and everything starts to work
+
 
