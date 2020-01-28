@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Thread;
 use App\Reply;
+use App\Trending;
 use Carbon\Carbon;
 use App\Channel;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class ThreadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($channelSlug = null, Request $request)
+    public function index($channelSlug = null, Request $request, Trending $trending)
     {
         if($channelSlug){
             $channelId = Channel::where('slug', $channelSlug)->first()->id;
@@ -29,9 +30,9 @@ class ThreadController extends Controller
            $threads = Thread::with('channel')->latest()->filter($request)->paginate(25); 
        }    
 
-     $trending = array_map('json_decode',Redis::zrevrange('trending_threads', 0, 4));
+     // $trending = array_map('json_decode',Redis::zrevrange('trending_threads', 0, 4));
         
-        return view('threads.index', compact('threads', 'trending'));
+        return view('threads.index', ['threads' => $threads, 'trending' => $trending->get()]);
     }
 
     /**
@@ -76,7 +77,7 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show( $channelId, Thread $thread)
+    public function show( $channelId, Thread $thread, Trending $trending)
     {     
         //record that a user visited this page 
         //record the time stamp
@@ -84,15 +85,10 @@ class ThreadController extends Controller
 
             Auth()->user()->visitedThreadCacheKey($thread);
             
-        }
-        // Redis::set('name', 'Taylor');
-         Redis::zincrby('trending_threads', 1, json_encode([
+        }   
 
-            'title' => $thread->title,
-            'path' => $thread->path()
-
-         ]));
-
+        $trending->push($thread);   
+         
         return view('threads.show', compact('thread'));
 
     }
