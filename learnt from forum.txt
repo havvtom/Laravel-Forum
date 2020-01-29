@@ -68,8 +68,19 @@ episode 68
 
 - used redis to record visits
 - Extracted methods to a trait
+- made (test_a_thread_records_each_visit) in the thread test
 
 episode 69
 
+- looking at another design 
+- changing the trait and turning it into a class
+* I did not do it because I am behind time, I will look at it when I get a chance
 
+episode 70
+
+- keep it simple stupid(KISS)
+- we can add another column in the database called visits
+- increment it evrytime a thread is visited
+
+episode 71
 

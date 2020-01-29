@@ -53,6 +53,10 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
+        if(! Auth()->user()->confirmed){
+
+            return redirect('/threads')->with('You need to confirm your email address first');
+        }
 
         $request->validate([
             'title' => 'required|spamfree',

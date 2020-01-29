@@ -75,4 +75,17 @@ class CreateThreadTest extends TestCase
         $this->publishThread(['channel_id' => ""])->assertStatus(302)
                             ->assertSessionHasErrors('channel_id');
     }
+
+    public function test_authenticated_users_must_first_confirm_their_email_before_publishing_a_thread(){
+
+        $this->be($user = factory(\App\User::class)->create());
+
+        $thread = factory(\App\User::class)->make(['user_id' => $user->id]);
+
+        $this->post('/threads', $thread->toArray())
+
+                ->assertRedirect('/threads')
+
+                ->assertSessionHas('flash', 'You need to confirm your email address first');
+    }
 }
