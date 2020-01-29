@@ -32,6 +32,9 @@
                     </div>
                     <hr>                   
                 </div>
+                <div class="card-footer">
+                    {{$thread->visits()}} Visits
+                </div>
             </div>
             @empty
             <p>There is nothing to show at the moment...</p>

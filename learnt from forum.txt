@@ -59,4 +59,17 @@ episode 66
 - set redis client to predis after installing redis and requiring it through composer
 - commented the line prefix in options in the database.php file and everything starts to work
 
+episode 67
+
+- refactoring of trends
+- unshowing trending threads if they dont exist
+
+episode 68
+
+- used redis to record visits
+- Extracted methods to a trait
+
+episode 69
+
+
 

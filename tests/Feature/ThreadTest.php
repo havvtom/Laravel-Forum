@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
+
 class ThreadTest extends TestCase
 {
     use RefreshDatabase;
@@ -82,6 +83,23 @@ class ThreadTest extends TestCase
     }
 
     
+    public function test_a_thread_records_each_visit(){
+        
 
+        $thread = factory(\App\Thread::class)->make(['thread_id' => 1]);
+
+        $thread->resetVisits();
+
+        $this->assertSame(0, $thread->visits());
+
+        $thread->recordVisit();
+
+        $this->assertEquals(1, $thread->visits());
+
+        $thread->recordVisit();
+
+        $this->assertEquals(2, $thread->visits());
+    }
 }
 
+//"vendor\bin\phpunit" --filter test_a_thread_records_each_visit

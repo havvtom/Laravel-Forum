@@ -8,10 +8,11 @@ use App\Filters\Threads\ThreadFilters;
 use App\ThreadSubscriptions;
 use App\Notifications\ThreadWasUpdated;
 use App\Events\ThreadHasNewReply;
+use Illuminate\Support\Facades\Redis;
 
 class Thread extends Model
 {
-    use RecordsActivityTrait;
+    use RecordsActivityTrait, RecordsVisitsTrait;
 
     protected $guarded = [];
 
@@ -112,4 +113,6 @@ class Thread extends Model
        
         return $this->updated_at > cache($key);
     }
+
+    
 }
