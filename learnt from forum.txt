@@ -84,3 +84,12 @@ episode 70
 
 episode 71
 
+- used middleware to protect the publishing thread route when email is not confirmed
+- had to fix the flash vue component so that it can also show when a message is sent from the server
+
+episode 72
+
+- learnt how to fake email
+- this can also be learnt from the laravel documents (type Mail Fake)
+- fired an event in the RegisterController just after creating a user
+- Open a maitrap account to use for testing

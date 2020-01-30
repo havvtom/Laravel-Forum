@@ -35,7 +35,7 @@ Route::post('/threads/{channel}/{thread}/replies', 'ReplyController@store');
 
 Route::get('/threads/{channel}/{thread}/replies', 'ReplyController@index');
 
-Route::post('/threads', 'ThreadController@store');
+Route::post('/threads', 'ThreadController@store')->middleware('confirm_email');
 
 Route::get('/threads/{channel}', 'ThreadController@index');
 

@@ -20,11 +20,11 @@ class CreateThreadTest extends TestCase
 
         $response->assertStatus(200);
     }
-    public function test_only_authenticated_users_can_post_a_thread(){
-            $this->expectException('Illuminate\Auth\AuthenticationException');
-            $thread = factory(\App\Thread::class)->make();
-            $this->post('/threads', $thread->toArray());
-    }
+    // public function test_only_authenticated_users_can_post_a_thread(){
+    //         $this->expectException('Illuminate\Auth\AuthenticationException');
+    //         $thread = factory(\App\Thread::class)->make();
+    //         $this->post('/threads', $thread->toArray());
+    // }
 
     public function test_an_authenticated_user_can_add_a_thread(){
         //user has to be authenticated
@@ -86,6 +86,7 @@ class CreateThreadTest extends TestCase
 
                 ->assertRedirect('/threads')
 
-                ->assertSessionHas('flash', 'You need to confirm your email address first');
+                ->assertSessionHas('flash', 'You need to confirm your email address first.');
     }
 }
+//"vendor\bin\phpunit" --filter test_authenticated_users_must_first_confirm_their_email_before_publishing_a_thread
