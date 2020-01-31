@@ -16,8 +16,6 @@
 				<image-upload name="avatar" class="mr-1" @loaded="onLoad"></image-upload>
 				
 				
-
-				<button class="btn btn-primary">Add Avatar</button>
 			</form>
 
 

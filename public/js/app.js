@@ -1863,8 +1863,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -58008,11 +58006,7 @@ var render = function() {
               staticClass: "mr-1",
               attrs: { name: "avatar" },
               on: { loaded: _vm.onLoad }
-            }),
-            _vm._v(" "),
-            _c("button", { staticClass: "btn btn-primary" }, [
-              _vm._v("Add Avatar")
-            ])
+            })
           ],
           1
         )
