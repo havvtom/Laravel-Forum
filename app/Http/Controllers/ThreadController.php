@@ -8,6 +8,7 @@ use App\Trending;
 use Carbon\Carbon;
 use App\Channel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redis;
 
 class ThreadController extends Controller
@@ -65,10 +66,11 @@ class ThreadController extends Controller
             'title' => $request->title,
             'body' => $request->body,
             'user_id' => Auth()->user()->id,
+            'slug' => Str::slug($request->title),
             'channel_id' => $request->channel_id
         ]);
 
-        return redirect()->route('thread', [$thread->channel->slug, $thread->id])->with('flash', "Your thread has been published");
+        return redirect($thread->path())->with('flash', "Your thread has been published");
     }
 
     /**

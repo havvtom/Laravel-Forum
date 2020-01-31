@@ -34,7 +34,7 @@ class ThreadTest extends TestCase
         	->assertStatus(200);
             
 
-        $response = $this->get('/threads/'.$this->thread->channel->slug.'/'.$this->thread->id)
+        $response = $this->get('/threads/'.$this->thread->channel->slug.'/'.$this->thread->slug)
 
         	->assertSee($this->thread->title);
     }
