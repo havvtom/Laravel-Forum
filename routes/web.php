@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/threads', 'ThreadController@index');
+Route::get('/threads', 'ThreadController@index')->name('threads');
 
 Route::get('/threads/create', 'ThreadController@create');
 
@@ -53,7 +53,7 @@ Route::delete('/replies/{reply}', 'ReplyController@destroy')->name('delete_reply
 
 Route::patch('/replies/{reply}', 'ReplyController@update');
 
-Route::get('register/confirm', 'Api\RegisterConfirmationController@index');
+Route::get('register/confirm', 'Api\RegisterConfirmationController@index')->name('register.confirm');
 
 Route::get('api/users', 'Api\UsersController@index');
 

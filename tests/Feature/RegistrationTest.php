@@ -35,6 +35,8 @@ class RegistrationTest extends TestCase
 
     public function test_users_can_fully_confirm_their_email_addresses(){
 
+        Mail::fake();
+
          $user = [
               'name' => 'Joe',
               'email' => 'testemail@test.com',
@@ -42,7 +44,7 @@ class RegistrationTest extends TestCase
               'password_confirmation' => 'passwordtest'
             ];
 
-        $response = $this->post('/register', $user);
+        $response = $this->post(route('register'), $user);
         $user = \App\User::whereName('Joe')->first();
         
         $this->assertDatabaseHas('users', ['name' => 'Joe']);
@@ -52,11 +54,20 @@ class RegistrationTest extends TestCase
         $this->assertNotNull($user->confirmation_token);
 
         //let user confirm their account
-        $response = $this->get('register/confirm?token='.$user->confirmation_token);
+        $response = $this->get(route('register.confirm', ['token' => $user->confirmation_token]));
 
         $this->assertTrue($user->fresh()->confirmed);
 
-        $response->assertRedirect('/threads');
+        $response->assertRedirect(route('threads'));
+    }
+
+    public function test_confirming_an_invalid_token(){
+
+        $this->get(route('register.confirm', ['token' => 'invalid']))
+
+                ->assertRedirect('/threads')
+
+                ->assertSessionHas('flash', 'Unkown token');
     }
 }
 

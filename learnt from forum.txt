@@ -101,3 +101,9 @@ episode 72
 - Used the line (use Illuminate\Support\Str;) and Str::random in the RegisterController
 - Not publishing threads, suspects the cache of the channels is the problem
 - Removed the button in AvatarComponent
+
+episode 73
+
+- overode the moethod publishThread when creating a user. Set confirmed=true
+- almost all the tests are passing now
+- Put the try catch to show an error if spamers give an unkown token

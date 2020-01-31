@@ -28,7 +28,7 @@ class CreateThreadTest extends TestCase
 
     public function test_an_authenticated_user_can_add_a_thread(){
         //user has to be authenticated
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\User::class)->create(['confirmed' => true]);
         $this->be($user);
 
         //hit the end point(post a thread)
@@ -43,7 +43,7 @@ class CreateThreadTest extends TestCase
     }
 
     public function publishThread($overrides = []){
-        $user = factory(\App\User::class)->create();
+        $user = factory(\App\User::class)->create(['confirmed' => true]);
         $this->be($user);
 
         $thread = factory(\App\Thread::class)->make($overrides);
@@ -89,4 +89,4 @@ class CreateThreadTest extends TestCase
                 ->assertSessionHas('flash', 'You need to confirm your email address first.');
     }
 }
-//"vendor\bin\phpunit" --filter test_authenticated_users_must_first_confirm_their_email_before_publishing_a_thread
+//"vendor\bin\phpunit" --filter CreateThreadTest
