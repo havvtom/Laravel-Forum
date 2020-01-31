@@ -32,7 +32,32 @@ class RegistrationTest extends TestCase
 
         Mail::assertSent(PleaseConfirmYourEmail::class);
     }
+
+    public function test_users_can_fully_confirm_their_email_addresses(){
+
+         $user = [
+              'name' => 'Joe',
+              'email' => 'testemail@test.com',
+              'password' => 'passwordtest',
+              'password_confirmation' => 'passwordtest'
+            ];
+
+        $response = $this->post('/register', $user);
+        $user = \App\User::whereName('Joe')->first();
+        
+        $this->assertDatabaseHas('users', ['name' => 'Joe']);
+
+        $this->assertFalse($user->confirmed);
+
+        $this->assertNotNull($user->confirmation_token);
+
+        //let user confirm their account
+        $response = $this->get('register/confirm?token='.$user->confirmation_token);
+
+        $this->assertTrue($user->fresh()->confirmed);
+
+        $response->assertRedirect('/threads');
+    }
 }
 
 //"vendor\bin\phpunit" --filter RegistrationTest
-//$user = factory(\App\User::class)->create()

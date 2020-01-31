@@ -3,8 +3,8 @@
 
 Click on the link below to confirm your email.
 
-@component('mail::button', ['url' => ''])
-Button Text
+@component('mail::button', ['url' => url('register/confirm?token='.$user->confirmation_token)])
+Confirm Email
 @endcomponent
 
 Thanks,<br>

@@ -93,3 +93,10 @@ episode 72
 - this can also be learnt from the laravel documents (type Mail Fake)
 - fired an event in the RegisterController just after creating a user
 - Open a maitrap account to use for testing
+- assertStatus(200) when there is a redirect gives an error. Instead use assertRedirect('redirected_page')
+- if using mailtrap its wise to restart the server before trying since it uses data that has been cached
+- changed the line in RegistersUsers to App\Events\Registered so that the Registered refers to the event that I made
+- added another field in the RegisterController (confirmation_token)
+- str_rnd no longer works in Laravel 5.7 upwards 
+- Used the line (use Illuminate\Support\Str;) and Str::random in the RegisterController
+- Not publishing threads, suspects the cache of the channels is the problem

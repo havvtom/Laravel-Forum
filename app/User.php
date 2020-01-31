@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'avatar_path'
+        'name', 'email', 'password', 'avatar_path', 'confirmation_token', 
     ];
 
 
@@ -37,6 +37,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'confirmed' =>  'boolean',
     ];
 
     public function getRouteKeyName()
@@ -71,5 +72,12 @@ class User extends Authenticatable
         return asset('/storage/'.$avatar);
     }
 
-    
+    public function confirm(){
+
+        $this->confirmed = true;
+
+        $this->email_verified_at = Carbon::now();
+
+        $this->save();
+    }
 }

@@ -53,6 +53,8 @@ Route::delete('/replies/{reply}', 'ReplyController@destroy')->name('delete_reply
 
 Route::patch('/replies/{reply}', 'ReplyController@update');
 
+Route::get('register/confirm', 'Api\RegisterConfirmationController@index');
+
 Route::get('api/users', 'Api\UsersController@index');
 
 Route::post('/api/users/{user}/avatar', 'Api\AvatarsController@store')->name('avatar');
