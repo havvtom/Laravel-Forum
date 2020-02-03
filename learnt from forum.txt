@@ -107,3 +107,7 @@ episode 73
 - overode the moethod publishThread when creating a user. Set confirmed=true
 - almost all the tests are passing now
 - Put the try catch to show an error if spamers give an unkown token
+
+episode 76
+-replace the end of the slug with a numeral if the thread title is being repeated
+-used preg_match for incerementing the last digit

@@ -91,13 +91,19 @@ class CreateThreadTest extends TestCase
 
     public function test_a_thread_requires_a_unique_slug(){
 
-        $this->publishThread(['title' => 'Foo Title', 'slug' => 'foo-title']);
+       $this->be($user = factory(\App\User::class)->create(['confirmed' => true]));
 
-        $this->assertTrue(\App\Thread::whereSlug('foo-title')->exists());
+       $thread = factory(\App\Thread::class)->create(['title' => 'Foo Bar', 'slug' => 'foo-bar']);
 
-        $this->publishThread(['title' => 'Foo Title', 'slug' => 'foo-title']);
+       $this->assertEquals($thread->fresh()->slug, 'foo-bar');
 
-        $this->assertTrue(\App\Thread::whereSlug('foo-title-2')->exists());
+       $this->post('/threads', $thread->toArray());
+
+       $this->assertDatabaseHas('threads', ['slug' => 'foo-bar-2']);
+
+       $this->post('/threads', $thread->toArray());
+
+       $this->assertTrue(\App\Thread::whereSlug('foo-bar-3')->exists());
     }
 }
 //"vendor\bin\phpunit" --filter test_a_thread_requires_a_unique_slug
