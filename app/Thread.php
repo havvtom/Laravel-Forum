@@ -9,6 +9,7 @@ use App\ThreadSubscriptions;
 use App\Notifications\ThreadWasUpdated;
 use App\Events\ThreadHasNewReply;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 class Thread extends Model
 {
@@ -117,5 +118,21 @@ class Thread extends Model
     public function getRouteKeyName(){
 
         return 'slug';
+    }
+
+    public function setSlugAttribute($value){
+
+        if(static::whereSlug($slug = Str::slug($value))->exists()){
+
+            $slug = $this->incrementSlug($slug);
+        }
+
+        $this->attributes['slug' => $slug];
+
+    }
+
+    public function incrementSlug($str){
+
+
     }
 }

@@ -88,5 +88,16 @@ class CreateThreadTest extends TestCase
 
                 ->assertSessionHas('flash', 'You need to confirm your email address first.');
     }
+
+    public function test_a_thread_requires_a_unique_slug(){
+
+        $this->publishThread(['title' => 'Foo Title', 'slug' => 'foo-title']);
+
+        $this->assertTrue(\App\Thread::whereSlug('foo-title')->exists());
+
+        $this->publishThread(['title' => 'Foo Title', 'slug' => 'foo-title']);
+
+        $this->assertTrue(\App\Thread::whereSlug('foo-title-2')->exists());
+    }
 }
-//"vendor\bin\phpunit" --filter CreateThreadTest
+//"vendor\bin\phpunit" --filter test_a_thread_requires_a_unique_slug
