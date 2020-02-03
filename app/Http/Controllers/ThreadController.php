@@ -66,9 +66,12 @@ class ThreadController extends Controller
             'title' => $request->title,
             'body' => $request->body,
             'user_id' => Auth()->user()->id,
-            'slug' => $request->title,
             'channel_id' => $request->channel_id
         ]);
+
+        if($request->wantsJson()){
+            return response($thread, 201);
+        }
 
         return redirect($thread->path())->with('flash', "Your thread has been published");
     }
