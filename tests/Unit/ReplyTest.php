@@ -62,6 +62,17 @@ class ReplyTest extends TestCase
             'Hello <a href="/profiles/Jane-Doe">@Jane-Doe</a>', $reply->body
         );
     }
+
+    public function test_it_knows_if_its_the_best_reply(){
+
+        $reply = factory(\App\Reply::class)->create();
+
+        $this->assertFalse($reply->isBestReply());
+
+        $reply->thread->update(['best_reply_id' => $reply->id]);
+
+        $this->assertTrue($reply->fresh()->isBestReply());
+    }
 }
 
-//"vendor\bin\phpunit" --filter test_it_wraps_mentioned_users_within_anchor_tags
+//"vendor\bin\phpunit" --filter test_it_knows_if_its_the_best_reply
