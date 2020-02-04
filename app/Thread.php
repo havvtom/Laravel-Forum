@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filters\Threads\ThreadFilters;
 use App\ThreadSubscriptions;
+use App\Reply;
 use App\Notifications\ThreadWasUpdated;
 use App\Events\ThreadHasNewReply;
 use Illuminate\Support\Facades\Redis;
@@ -135,6 +136,11 @@ class Thread extends Model
 
         $this->attributes['slug'] = $slug;
 
+    }
+
+    public function markBestReply(Reply $reply){
+
+        return $this->update(['best_reply_id' => $reply->id]);
     }
 
     
