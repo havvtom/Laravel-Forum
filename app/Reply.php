@@ -14,7 +14,7 @@ class Reply extends Model
 
 	protected $guarded = [];
     protected $with = ['user', 'favorites'];
-    protected $appends = ['favoritesCount', 'isFavorited'];
+    protected $appends = ['favoritesCount', 'isFavorited', 'isBestReply'];
 	
     protected static function boot()
     {
@@ -75,6 +75,10 @@ class Reply extends Model
 
     public function getIsFavoritedAttribute(){
         return $this->isFavorited();
+    }
+
+    public function getIsBestReplyAttribute(){
+        return $this->isBestReply();
     }
 
     public function path(){

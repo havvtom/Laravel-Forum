@@ -44,6 +44,8 @@ Vue.component('avatar-form', require('./components/AvatarComponent.vue').default
  	return user ? handler(user) : false;
  };
 
+ Vue.prototype.signedIn = window.App.signedIn;
+
 const app = new Vue({
     el: '#app',
 });

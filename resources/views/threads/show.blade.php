@@ -18,7 +18,7 @@
                   <div class="card-header">
                     <div class='level'>
                       <img src="{{$thread->owner->avatar_path}}" width="50" height="50"class="mr-1">
-                      <span class="flex"><a href="{{route('profile', $thread->owner->name)}}">{{$thread->owner->name}} </a> posted: <a href="{{route('thread', [$thread->channel->slug, $thread->id])}}">{{$thread->title}}</a></span>
+                      <span class="flex"><a href="{{route('profile', $thread->owner->name)}}">{{$thread->owner->name}} </a> posted: <a href="{{route('thread', [$thread->channel->slug, $thread->slug])}}">{{$thread->title}}</a></span>
                       <span>
                         @can('update', $thread)
                         <form action="{{basename($thread->path())}}" method="POST">

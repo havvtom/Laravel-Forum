@@ -4,7 +4,7 @@
                     <div class="level">
                        <div class="flex">
                         <h4>
-                            <a href="{{route ('thread', [$thread->channel->slug, $thread->id])}}">
+                            <a href="{{route ('thread', [$thread->channel->slug, $thread->slug])}}">
                                 @if(Auth()->check() && $thread->hasUpdatesFor(Auth()->user()))
 
                                     <strong>{{$thread->title}}</strong>
@@ -23,7 +23,7 @@
 
                         </h5>
                        </div>
-                        <strong><a href="{{route ('thread', [$thread->channel->slug, $thread->id])}}">{{$thread->replies_count}} {{Str::plural('reply', $thread->replies_count)}}</a></strong>
+                        <strong><a href="{{route ('thread', [$thread->channel->slug, $thread->slug])}}">{{$thread->replies_count}} {{Str::plural('reply', $thread->replies_count)}}</a></strong>
                     </div>
                 </div>
                 <div class="card-body">                   

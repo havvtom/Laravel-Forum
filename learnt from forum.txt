@@ -109,5 +109,13 @@ episode 73
 - Put the try catch to show an error if spamers give an unkown token
 
 episode 76
+
 -replace the end of the slug with a numeral if the thread title is being repeated
 -used preg_match for incerementing the last digit
+
+episode 80
+
+-refactoring the reply component
+-set method signed in app.js as Vue.prototype.signedIn = window.App.signedIn
+
+episode 81

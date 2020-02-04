@@ -1,6 +1,6 @@
 <template>
 	
-	<button :class="classes" @click="subscribe">Subscribe</button>
+	<button :class="classes" @click="subscribe" v-if="signedIn">Subscribe</button>
 	
 </template>
 

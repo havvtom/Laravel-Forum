@@ -1955,7 +1955,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['reply'],
   computed: {
     classes: function classes() {
-      return ['btn', this.isFavorited ? 'btn-primary' : 'btn-default'];
+      return ['btn', this.isFavorited ? 'btn-primary' : 'btn btn-outline-secondary'];
     },
     endpoint: function endpoint() {
       return '/replies/' + this.reply.id + '/favorites';
@@ -2355,6 +2355,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data'],
@@ -2362,13 +2367,14 @@ __webpack_require__.r(__webpack_exports__);
     return {
       editing: false,
       body: this.data.body,
-      id: this.data.id
+      id: this.data.id,
+      isBest: this.data.isBestReply
     };
   },
   computed: {
-    signedIn: function signedIn() {
-      return window.App.signedIn;
-    },
+    // signedIn(){
+    // 	return window.App.signedIn;
+    // },
     canUpdate: function canUpdate() {
       var _this = this;
 
@@ -2380,24 +2386,34 @@ __webpack_require__.r(__webpack_exports__);
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(this.data.created_at).fromNow() + "...";
     }
   },
+  created: function created() {
+    var _this2 = this;
+
+    window.events.$on('best_reply_selected', function (id) {
+      _this2.isBest = _this2.id == id;
+    });
+  },
   methods: {
     update: function update() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.patch('/replies/' + this.data.id, {
         body: this.body
       }).then(function (response) {
-        _this2.editing = false;
+        _this3.editing = false;
         flash('Updated!');
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
     },
+    markBestReply: function markBestReply() {
+      this.isBest = true;
+      axios.post('/replies/' + this.data.id + '/best');
+      window.events.$emit('best_reply_selected', this.data.id);
+    },
     destroy: function destroy() {
       axios["delete"]('/replies/' + this.data.id);
-      this.$emit('delete', this.data.id); // $(this.$el).fadeOut(3000,()=>{
-      // 	flash('You reply has been deleted!');
-      // });
+      this.$emit('delete', this.data.id);
     }
   }
 });
@@ -58412,22 +58428,26 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card", attrs: { id: "reply" + _vm.id } }, [
-    _c("div", { staticClass: "card-header" }, [
-      _c("div", { staticClass: "level" }, [
-        _c("h5", { staticClass: "flex" }, [
-          _c("a", {
-            attrs: { href: "/profiles/" + _vm.data.user.name },
-            domProps: { textContent: _vm._s(_vm.data.user.name) }
-          }),
-          _vm._v(" said "),
-          _c("span", { domProps: { textContent: _vm._s(_vm.ago) } })
-        ]),
-        _vm._v(" "),
-        _vm.signedIn
-          ? _c("div", [_c("favorite", { attrs: { reply: _vm.data } })], 1)
-          : _vm._e()
-      ])
-    ]),
+    _c(
+      "div",
+      { staticClass: "card-header", class: _vm.isBest ? "bg-success" : "" },
+      [
+        _c("div", { staticClass: "level" }, [
+          _c("h5", { staticClass: "flex" }, [
+            _c("a", {
+              attrs: { href: "/profiles/" + _vm.data.user.name },
+              domProps: { textContent: _vm._s(_vm.data.user.name) }
+            }),
+            _vm._v(" said "),
+            _c("span", { domProps: { textContent: _vm._s(_vm.ago) } })
+          ]),
+          _vm._v(" "),
+          _vm.signedIn
+            ? _c("div", [_c("favorite", { attrs: { reply: _vm.data } })], 1)
+            : _vm._e()
+        ])
+      ]
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
       _vm.editing
@@ -58480,31 +58500,50 @@ var render = function() {
         : _c("div", { domProps: { innerHTML: _vm._s(_vm.body) } })
     ]),
     _vm._v(" "),
-    _vm.canUpdate
-      ? _c("div", { staticClass: "card-footer level" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-info btn-xs mr-1",
-              on: {
-                click: function($event) {
-                  _vm.editing = true
+    _c("div", { staticClass: "card-footer level" }, [
+      _vm.canUpdate
+        ? _c("div", [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-info btn-xs mr-1",
+                on: {
+                  click: function($event) {
+                    _vm.editing = true
+                  }
                 }
-              }
-            },
-            [_vm._v("Edit")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
+              },
+              [_vm._v("Edit")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger btn-xs mr-1",
+                on: { click: _vm.destroy }
+              },
+              [_vm._v("Delete")]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          directives: [
             {
-              staticClass: "btn btn-danger btn-xs mr-1",
-              on: { click: _vm.destroy }
-            },
-            [_vm._v("Delete")]
-          )
-        ])
-      : _vm._e()
+              name: "show",
+              rawName: "v-show",
+              value: !_vm.isBest,
+              expression: " !isBest "
+            }
+          ],
+          staticClass: "btn btn-outline-secondary ml-a",
+          on: { click: _vm.markBestReply }
+        },
+        [_vm._v("Best Reply?")]
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -58529,9 +58568,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("button", { class: _vm.classes, on: { click: _vm.subscribe } }, [
-    _vm._v("Subscribe")
-  ])
+  return _vm.signedIn
+    ? _c("button", { class: _vm.classes, on: { click: _vm.subscribe } }, [
+        _vm._v("Subscribe")
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -70804,6 +70845,7 @@ Vue.prototype.authorize = function (handler) {
   return user ? handler(user) : false;
 };
 
+Vue.prototype.signedIn = window.App.signedIn;
 var app = new Vue({
   el: '#app'
 });

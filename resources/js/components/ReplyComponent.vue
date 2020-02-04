@@ -1,7 +1,7 @@
 <template>
 	<!-- <reply :attributes="{{$reply}}" inline-template v-cloak> -->
     <div class="card" :id="'reply'+id">
-        <div class="card-header">
+        <div class="card-header" :class="isBest ? 'bg-success' : ''">
         	<div class="level">
         		<h5 class="flex">
         		<a :href="'/profiles/'+data.user.name" v-text="data.user.name"></a> said <span v-text="ago"></span>
@@ -29,9 +29,14 @@
             </div>
         </div>
        <!--  @can('update', $reply) -->
-        <div class="card-footer level" v-if="canUpdate">
-            <button class="btn btn-info btn-xs mr-1" @click="editing=true">Edit</button>
-            <button class="btn btn-danger btn-xs mr-1" @click="destroy">Delete</button>
+        <div class="card-footer level" >
+        	<div v-if="canUpdate">
+        		<button class="btn btn-info btn-xs mr-1" @click="editing=true">Edit</button>
+            	<button class="btn btn-danger btn-xs mr-1" @click="destroy">Delete</button>
+        	</div>
+
+            <button class="btn btn-outline-secondary ml-a" @click="markBestReply" v-show=" !isBest ">Best Reply?</button>
+
         </div>
         <!-- @endcan -->
     </div>
@@ -45,13 +50,14 @@
 			return {
 				editing: false,
 				body: this.data.body,
-				id: this.data.id
+				id: this.data.id,
+				isBest: this.data.isBestReply
 			}
 		},
 		computed:{
-			signedIn(){
-				return window.App.signedIn;
-			},
+			// signedIn(){
+			// 	return window.App.signedIn;
+			// },
 			canUpdate(){
 
 				return this.authorize(user => this.data.user.id == user.id);
@@ -60,6 +66,13 @@
 			ago(){
 				return moment(this.data.created_at).fromNow()+"...";
 			}
+		},
+		created(){
+
+			window.events.$on('best_reply_selected', id => {
+
+				this.isBest = (this.id == id);
+			});
 		},
 		methods:{
 			update(){
@@ -77,14 +90,20 @@
 
 				
 			},
+			markBestReply(){
+
+				this.isBest = true;
+
+				axios.post('/replies/'+this.data.id+'/best');
+
+				window.events.$emit('best_reply_selected', this.data.id);
+
+			},
 
 			destroy(){
 				axios.delete('/replies/' + this.data.id);
 
 				this.$emit('delete', this.data.id);
-				// $(this.$el).fadeOut(3000,()=>{
-				// 	flash('You reply has been deleted!');
-				// });
 				
 			}
 		}
