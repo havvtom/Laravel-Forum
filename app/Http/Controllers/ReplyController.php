@@ -23,6 +23,10 @@ class ReplyController extends Controller
 	
     public function store($channelID, Thread $thread, Request $request){
 
+      if($thread->locked){
+        return response('Thread is locked', 422);
+      }
+
         try {
 
             $lastReply = Auth()->user()->lastReply;

@@ -124,3 +124,9 @@ episode 83
 - the way explained in the episode was a bit complicated
 - the thread owner can be got from the data and used the id to compare it with the authenticated user
 - seems to be working without a glitch
+
+episode 84
+
+- locking a thread so that you cannot reply to it
+- created new feature test LockTreadsTest
+- added the column to the threads table and also added it to the thread factory
