@@ -2389,6 +2389,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this2 = this;
 
+    // console.log(this.data.thread.user_id, window.App.user.id);
     window.events.$on('best_reply_selected', function (id) {
       _this2.isBest = _this2.id == id;
     });

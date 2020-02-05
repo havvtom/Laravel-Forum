@@ -68,7 +68,7 @@
 			}
 		},
 		created(){
-
+			// console.log(this.data.thread.user_id, window.App.user.id);
 			window.events.$on('best_reply_selected', id => {
 
 				this.isBest = (this.id == id);

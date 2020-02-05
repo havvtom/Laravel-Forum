@@ -21,6 +21,7 @@ class Reply extends Model
         parent::boot();
 
         static::deleting(function($reply){
+
             $reply->favorites()->get()->each(function($favorite){
                 $favorite->delete();
             });

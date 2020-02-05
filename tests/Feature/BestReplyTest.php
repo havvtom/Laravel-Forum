@@ -52,6 +52,22 @@ class BestReplyTest extends TestCase
 
         $this->assertFalse($reply->fresh()->isBestReply());
     }
+
+    public function test_if_best_reply_is_deleted_the_thread_is_properly_updated(){
+        $this->be($user = factory(\App\User::class)->create());
+
+        // $thread = factory(\App\Thread::class)->create(['user_id' => $user->id]);
+
+        $replies = factory(\App\Reply::class)->create(['user_id' => $user->id]);
+
+        $this->postJson(route('best-reply', $replies->id));
+
+        $this->deleteJson('/replies/'.$replies->id)->assertStatus(200);
+
+        // dd($replies->isBestReply);
+
+        $this->assertSame(null, $replies->thread->fresh()->best_reply_id);
+    }
 }
 
-//"vendor\bin\phpunit" --filter test_a_thread_maker_may_mark_a_reply_as_the_best
+//"vendor\bin\phpunit" --filter test_if_best_reply_is_deleted_the_thread_is_properly_updated
