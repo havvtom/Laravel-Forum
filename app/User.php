@@ -85,6 +85,6 @@ class User extends Authenticatable
 
      public function isAdmin(){
 
-        if($this->name == 'Tom') return false;
+        return in_array($this->name, ['Tom', 'Sharon']);
     }
 }

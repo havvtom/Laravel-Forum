@@ -27,11 +27,23 @@ class LockThreadsTest extends TestCase
 
         $thread = factory(\App\Thread::class)->create(['user_id' => $user->id]);
 
-        $this->patch($thread->path(), ['locked' => true])
+        $this->post(route('locked-threads.store', $thread))
 
             ->assertStatus(403);
 
         $this->assertFalse($thread->fresh()->locked);
+    }
+
+    public function test_adminstrators_my_lock_threads(){
+
+        $this->be($user = factory(\App\User::class)->states('administrator')->create());
+
+        $thread = factory(\App\Thread::class)->create();
+
+        $this->post(route('locked-threads.store', $thread));
+
+        $this->assertDatabaseHas('threads', ['locked' => true]);
+
     }
 
     public function test_once_locked_a_thread_cannot_receive_replies(){

@@ -41,7 +41,7 @@ class Thread extends Model
     
     public function path(){
 
-    	return 'threads/'.$this->channel->slug.'/'.$this->slug;
+    	return '/threads/'.$this->channel->slug.'/'.$this->slug;
         
     }
 
