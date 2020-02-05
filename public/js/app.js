@@ -2384,13 +2384,17 @@ __webpack_require__.r(__webpack_exports__);
     },
     ago: function ago() {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(this.data.created_at).fromNow() + "...";
+    },
+    owns: function owns() {
+      return this.data.thread.user_id === window.App.user.id;
     }
   },
   created: function created() {
     var _this2 = this;
 
-    // console.log(this.data.thread.user_id, window.App.user.id);
     window.events.$on('best_reply_selected', function (id) {
+      _this2.owns();
+
       _this2.isBest = _this2.id == id;
     });
   },
@@ -58535,8 +58539,8 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: !_vm.isBest,
-              expression: " !isBest "
+              value: !_vm.isBest && _vm.owns,
+              expression: " !isBest && owns "
             }
           ],
           staticClass: "btn btn-outline-secondary ml-a",

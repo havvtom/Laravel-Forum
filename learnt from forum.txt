@@ -118,4 +118,9 @@ episode 80
 -refactoring the reply component
 -set method signed in app.js as Vue.prototype.signedIn = window.App.signedIn
 
-episode 81
+episode 83
+
+- used computed properties to show the best reply button
+- the way explained in the episode was a bit complicated
+- the thread owner can be got from the data and used the id to compare it with the authenticated user
+- seems to be working without a glitch

@@ -35,7 +35,7 @@
             	<button class="btn btn-danger btn-xs mr-1" @click="destroy">Delete</button>
         	</div>
 
-            <button class="btn btn-outline-secondary ml-a" @click="markBestReply" v-show=" !isBest ">Best Reply?</button>
+            <button class="btn btn-outline-secondary ml-a" @click="markBestReply" v-show=" !isBest && owns ">Best Reply?</button>
 
         </div>
         <!-- @endcan -->
@@ -65,12 +65,16 @@
 			},
 			ago(){
 				return moment(this.data.created_at).fromNow()+"...";
+			},
+			owns(){
+
+				return this.data.thread.user_id === window.App.user.id;
 			}
 		},
 		created(){
-			// console.log(this.data.thread.user_id, window.App.user.id);
+			
 			window.events.$on('best_reply_selected', id => {
-
+				this.owns();
 				this.isBest = (this.id == id);
 			});
 		},
