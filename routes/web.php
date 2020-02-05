@@ -21,6 +21,8 @@ Route::get('/threads/create', 'ThreadController@create');
 
 Route::get('/threads/{channel}/{thread}', 'ThreadController@show')->name('thread');
 
+Route::patch('/threads/{channel}/{thread}', 'ThreadController@update')->name('thread.update');
+
 Route::delete('/threads/{channel}/{thread}', 'ThreadController@destroy');
 
 Auth::routes();

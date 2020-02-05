@@ -21,7 +21,20 @@ class LockThreadsTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_an_administrator_can_lock_any_thread(){
+    public function test_non_administrators_my_not_lock_threads(){
+
+        $this->be($user = factory(\App\User::class)->create());
+
+        $thread = factory(\App\Thread::class)->create(['user_id' => $user->id]);
+
+        $this->patch($thread->path(), ['locked' => true])
+
+            ->assertStatus(403);
+
+        $this->assertFalse($thread->fresh()->locked);
+    }
+
+    public function test_once_locked_a_thread_cannot_receive_replies(){
 
         $thread = factory(\App\Thread::class)->create();
 
@@ -39,4 +52,4 @@ class LockThreadsTest extends TestCase
     }
 }
 
-//"vendor\bin\phpunit" --filter test_an_administrator_can_lock_any_thread
+//"vendor\bin\phpunit" --filter test_non_administrators_my_not_lock_threads

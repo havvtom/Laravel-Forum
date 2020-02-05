@@ -82,4 +82,9 @@ class User extends Authenticatable
 
         $this->save();
     }
+
+     public function isAdmin(){
+
+        if($this->name == 'Tom') return false;
+    }
 }
