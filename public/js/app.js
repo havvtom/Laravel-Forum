@@ -2271,6 +2271,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_mixins_collection__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -2516,11 +2518,21 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['initialRepliesCount'],
+  props: ['initialRepliesCount', 'dataLocked'],
   data: function data() {
     return {
-      repliesCount: this.initialRepliesCount
+      repliesCount: this.initialRepliesCount,
+      locked: this.dataLocked
     };
+  },
+  computed: {
+    isAdmin: function isAdmin() {
+      if (window.App.user) {
+        return ['Tom', 'Sharon'].includes(window.App.user.name);
+      }
+
+      return false;
+    }
   }
 });
 
@@ -58405,7 +58417,13 @@ var render = function() {
         on: { changed: _vm.fetch }
       }),
       _vm._v(" "),
-      _c("new-reply", { on: { created: _vm.add } })
+      _vm.$parent.locked
+        ? _c("p", [
+            _vm._v(
+              "\n\t\tThis thread has been locked. No more replies are allowed.\n\t"
+            )
+          ])
+        : _c("new-reply", { on: { created: _vm.add } })
     ],
     2
   )

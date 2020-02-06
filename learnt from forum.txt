@@ -130,3 +130,15 @@ episode 84
 - locking a thread so that you cannot reply to it
 - created new feature test LockTreadsTest
 - added the column to the threads table and also added it to the thread factory
+
+episode 85
+
+- Put a middleware for locking threads
+- One has to be signed in and also an administrator
+
+episode 86
+
+- Made name unique on the database column
+- Also changed the label to Username on registering users
+- Added a validation rule to RegisterController in the users table
+- Passed locked property to the thread-view component through props
