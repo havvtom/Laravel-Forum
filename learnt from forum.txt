@@ -142,3 +142,8 @@ episode 86
 - Also changed the label to Username on registering users
 - Added a validation rule to RegisterController in the users table
 - Passed locked property to the thread-view component through props
+
+episode 87
+
+- changed protected $casts in the Thread model so that the locked passed property can be read in Vue
+- (this.locked =! this.locked;) can be used to toggle the button between lock and unlock but the exclamation mark should be after =

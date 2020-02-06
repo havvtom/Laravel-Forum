@@ -1,12 +1,21 @@
 <script type="text/javascript">
 	export default{
-		props:['initialRepliesCount', 'dataLocked'],
+		props:['initialRepliesCount', 'data'],
 		data(){
 			return{
-				repliesCount: this.initialRepliesCount,
-				locked: this.dataLocked,
+				repliesCount: this.data.replies_count,
+				locked: this.data.locked,
 			}
 		}, 
+		methods: {
+
+			toggle(){
+
+				// axios.post('/locked-threads/'+this.data.slug);
+				this.locked =! this.locked;
+				
+			}
+		},
 		computed: {
 			isAdmin(){
 				if(window.App.user){
@@ -15,6 +24,9 @@
 
 					return false;
 			}
+		}, 
+		created(){
+			console.log(this.data.locked);
 		}
 	}
 </script>

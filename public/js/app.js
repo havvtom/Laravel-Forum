@@ -2518,12 +2518,18 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['initialRepliesCount', 'dataLocked'],
+  props: ['initialRepliesCount', 'data'],
   data: function data() {
     return {
-      repliesCount: this.initialRepliesCount,
-      locked: this.dataLocked
+      repliesCount: this.data.replies_count,
+      locked: this.data.locked
     };
+  },
+  methods: {
+    toggle: function toggle() {
+      // axios.post('/locked-threads/'+this.data.slug);
+      this.locked = !this.locked;
+    }
   },
   computed: {
     isAdmin: function isAdmin() {
@@ -2533,6 +2539,9 @@ __webpack_require__.r(__webpack_exports__);
 
       return false;
     }
+  },
+  created: function created() {
+    console.log(this.data.locked);
   }
 });
 

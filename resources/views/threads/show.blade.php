@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<thread-view :initial-replies-count="{{$thread->replies_count}}" :data-locked="{{$thread->locked}}" inline-template>
+<thread-view :data="{{$thread}}" inline-template>
   @if (count($errors) > 0)
      <div class = "alert alert-danger">
         <ul>
@@ -45,7 +45,7 @@
                     </p>
                     <p>
                       <subscribe-button :active="{{$thread->isSubscribedTo ? 'true' : 'false'}}"></subscribe-button>
-                      <button class="btn btn-outline-secondary" v-if="isAdmin && !locked" @click="locked=true">Lock</button>
+                      <button class="btn btn-outline-secondary" v-if="isAdmin" @click="toggle" v-text="locked ? 'UnLock' : 'Lock'"></button>
                     </p>
                   </div>
               </div>
