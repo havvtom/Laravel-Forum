@@ -31,10 +31,10 @@ class LockThreadsTest extends TestCase
 
             ->assertStatus(403);
 
-        $this->assertFalse($thread->fresh()->locked);
+        $this->assertFalse(!!$thread->fresh()->locked);
     }
 
-    public function test_adminstrators_my_lock_threads(){
+    public function test_adminstrators_may_lock_and_unlock_threads(){
 
         $this->be($user = factory(\App\User::class)->states('administrator')->create());
 
@@ -42,17 +42,24 @@ class LockThreadsTest extends TestCase
 
         $this->post(route('locked-threads.store', $thread));
 
-        $this->assertDatabaseHas('threads', ['locked' => true]);
+        $this->assertTrue(!!$thread->fresh()->locked);
+
+        $this->delete(route('locked-threads.delete', $thread))
+
+            ->assertStatus(200);
+
+        $this->assertFalse(!!$thread->fresh()->locked);
 
     }
 
+
     public function test_once_locked_a_thread_cannot_receive_replies(){
 
-        $thread = factory(\App\Thread::class)->create();
+        $thread = factory(\App\Thread::class)->create(['locked'=> true]);
 
         $this->be($user = factory(\App\User::class)->create());
 
-        $thread->lock();
+        $this->assertTrue(!!$thread->locked);
 
         $reply = factory(\App\Reply::class)->make();
 
@@ -64,4 +71,4 @@ class LockThreadsTest extends TestCase
     }
 }
 
-//"vendor\bin\phpunit" --filter test_non_administrators_my_not_lock_threads
+//"vendor\bin\phpunit" --filter LockThreadsTest

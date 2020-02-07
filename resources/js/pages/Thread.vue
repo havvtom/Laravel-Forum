@@ -11,7 +11,8 @@
 
 			toggle(){
 
-				// axios.post('/locked-threads/'+this.data.slug);
+				axios[this.locked ? 'delete' : 'post']('/locked-threads/'+this.data.slug);
+				
 				this.locked =! this.locked;
 				
 			}

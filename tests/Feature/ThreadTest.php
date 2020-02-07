@@ -101,16 +101,6 @@ class ThreadTest extends TestCase
         $this->assertEquals(2, $thread->visits());
     }
 
-    public function test_a_thread_may_be_locked(){
-
-        $thread = factory(\App\Thread::class)->create();
-
-        $this->assertFalse($thread->locked);
-
-        $thread->lock();
-
-        $this->assertTrue($thread->locked);
-    }
 }
 
 //"vendor\bin\phpunit" --filter test_a_thread_may_be_locked

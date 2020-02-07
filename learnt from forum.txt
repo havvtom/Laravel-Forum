@@ -147,3 +147,5 @@ episode 87
 
 - changed protected $casts in the Thread model so that the locked passed property can be read in Vue
 - (this.locked =! this.locked;) can be used to toggle the button between lock and unlock but the exclamation mark should be after =
+- if not $casts in the model, then asserting true as 1 and 0 as false is going to fail
+- we just need to put !! (double negative)
