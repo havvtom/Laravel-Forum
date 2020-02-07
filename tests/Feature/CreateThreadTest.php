@@ -105,13 +105,29 @@ class CreateThreadTest extends TestCase
 
        $this->assertDatabaseHas('threads', ['slug' => 'foo-bar-4']);
 
-       // $this->post('/threads', $thread->toArray());
-
-       // $this->assertTrue(\App\Thread::whereSlug('foo-bar-3')->exists());
+       
     }
 
-    // public function test_a_thread_with_a_number_at_the_end_should_generate_a_correct_slug(){
+    public function test_unauthorized_users_may_not_update_threads(){
 
-    // }
+        $this->be($user = factory(\App\User::class)->create(['id' => 25]));
+
+        $thread = factory(\App\Thread::class)->create(['user_id' => 28]);
+
+        $this->patch(route('thread.update', [$thread->channel, $thread]), ['title' => 'changed', 'body' => 'body changed'])->assertStatus(403);
+
+    }
+
+    public function test_a_thread_can_be_updated(){
+
+        $this->be($user = factory(\App\User::class)->create());
+
+        $thread = factory(\App\Thread::class)->create(['user_id' => $user->id]);
+
+        $this->patch(route('thread.update', [$thread->channel, $thread]), ['title' => 'changed', 'body' => 'body changed'])->assertStatus(200);
+
+        $this->assertEquals($thread->fresh()->title, 'changed');
+
+    }
 }
-//"vendor\bin\phpunit" --filter test_a_thread_requires_a_unique_slug
+//"vendor\bin\phpunit" --filter test_unauthorized_users_may_not_update_threads
