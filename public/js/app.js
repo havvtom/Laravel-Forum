@@ -2522,7 +2522,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       repliesCount: this.data.replies_count,
-      locked: this.data.locked
+      locked: this.data.locked,
+      editing: false
     };
   },
   methods: {

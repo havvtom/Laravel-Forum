@@ -5,6 +5,7 @@
 			return{
 				repliesCount: this.data.replies_count,
 				locked: this.data.locked,
+				editing: false,
 			}
 		}, 
 		methods: {

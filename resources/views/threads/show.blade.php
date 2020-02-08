@@ -13,29 +13,10 @@
   @endif
   <div class="container">
       <div class="row justify-content-center">
-          <div class="col-md-8">
-              <div class="card">
-                  <div class="card-header">
-                    <div class='level'>
-                      <img src="{{$thread->owner->avatar_path}}" width="50" height="50"class="mr-1">
-                      <span class="flex"><a href="{{route('profile', $thread->owner->name)}}">{{$thread->owner->name}} </a> posted: <a href="{{route('thread', [$thread->channel->slug, $thread->slug])}}">{{$thread->title}}</a></span>
-                      <span>
-                        @can('update', $thread)
-                        <form action="{{basename($thread->path())}}" method="POST">
-                          @csrf
-                          @method('DELETE')
-                          <button class="btn btn-link">Delete Thread</button>
-                        </form>
-                        @endcan
-                      </span>
-                    </div>
-                  </div>
-                      
-                  <div class="card-body">
-                    {{$thread->body}}
-                  </div>
-              </div>
-              <replies @removed="repliesCount--" @added="repliesCount++"></replies>            
+          <div class="col-md-8" v-cloak>
+              @include('threads._question')
+
+              <replies @removed="repliesCount--" @added="repliesCount++" v-if="! editing"></replies>            
            
           </div>
           <div class="col-md-4">
