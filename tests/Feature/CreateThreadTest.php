@@ -124,7 +124,7 @@ class CreateThreadTest extends TestCase
 
         $thread = factory(\App\Thread::class)->create(['user_id' => $user->id]);
 
-        $this->patch('threads/'.$thread->channel->slug.'/'.$thread->slug, ['title' => 'changed', 'body' => 'body changed'])->assertStatus(200);
+        $this->patch($thread->path(), ['title' => 'changed', 'body' => 'body changed'])->assertStatus(200);
 
         $this->assertEquals($thread->fresh()->title, 'changed');
 

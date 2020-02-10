@@ -15,4 +15,9 @@ class Channel extends Model
     	
     	return $this->hasMany(\App\Thread::class);
     }
+
+    public function getRouteKeyName(){
+
+    	return 'slug';
+    }
 }

@@ -21,7 +21,7 @@
       <div class="level">
         <button class="btn btn-outline-secondary btn-xs mr-2" v-if="!editing" @click="editing=true">Edit</button>
         <button class="btn btn-primary btn-xs mr-2" @click="update" >Update</button>
-        <button class="btn btn-outline-secondary btn-xs" @click="editing=false">Cancel</button>
+        <button class="btn btn-outline-secondary btn-xs" @click="cancel">Cancel</button>
         @can('update', $thread)
           <form action="{{basename($thread->path())}}" method="POST" class="ml-a">
             @csrf
@@ -39,15 +39,15 @@
     <div class="card-header">
       <div class='level'>
         <img src="{{$thread->owner->avatar_path}}" width="50" height="50"class="mr-1">
-        <span class="flex"><a href="{{route('profile', $thread->owner->name)}}">{{$thread->owner->name}} </a> posted: <a href="{{route('thread', [$thread->channel->slug, $thread->slug])}}">{{$thread->title}}</a></span>
+        <span class="flex"><a href="{{route('profile', $thread->owner->name)}}">{{$thread->owner->name}} </a> posted: <a href="{{route('thread', [$thread->channel->slug, $thread->slug])}}" v-text="title"></a></span>
         
       </div>
     </div>
         
     <div class="card-body">
-      {{$thread->body}}
+      <span v-text="body"></span>
     </div>
-    <div class="card-footer">
-      <button class="btn btn-outline-secondary btn-xs" @click="editing=true">Edit</button>
+    <div class="card-footer" v-if="owns">
+      <button class="btn btn-outline-secondary btn-xs" @click="editing=true" >Edit</button>
     </div>
 </div>

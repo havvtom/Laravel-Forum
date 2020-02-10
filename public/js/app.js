@@ -2524,6 +2524,8 @@ __webpack_require__.r(__webpack_exports__);
       repliesCount: this.data.replies_count,
       locked: this.data.locked,
       editing: false,
+      body: this.data.body,
+      title: this.data.title,
       form: {
         title: this.data.title,
         body: this.data.body
@@ -2535,11 +2537,18 @@ __webpack_require__.r(__webpack_exports__);
       axios[this.locked ? 'delete' : 'post']('/locked-threads/' + this.data.slug);
       this.locked = !this.locked;
     },
+    cancel: function cancel() {
+      this.editing = false;
+      this.form.body = this.data.body;
+      this.form.title = this.data.title;
+    },
     update: function update() {
-      axios.patch('/threads/' + this.data.channel.slug + '/' + this.data.slug, {
-        title: this.data.title,
-        body: this.data.body
-      }).then(function () {
+      var _this = this;
+
+      axios.patch('/threads/' + this.data.channel.slug + '/' + this.data.slug, this.form).then(function () {
+        _this.editing = false;
+        _this.title = _this.form.title;
+        _this.body = _this.form.body;
         flash('Your thread has been updated');
       });
     }
@@ -2551,10 +2560,12 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return false;
+    },
+    owns: function owns() {
+      return this.data.user_id === window.App.user.id;
     }
   },
-  created: function created() {
-    console.log(this.data.channel.slug);
+  created: function created() {// console.log(this.data.user_id,window.App.user.id);
   }
 });
 

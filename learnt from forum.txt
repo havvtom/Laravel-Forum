@@ -154,3 +154,6 @@ episode 93
 
 - construct the endpoint manually since we have evrything we need from the thread
 - to pass the form fields we register the form as an object in the properties and use v-model binding
+- something wrong with my path($thread->channel->slug) 
+- changed the getRouteKeyName in channel model to 'slug'
+- learnt how to keep and change the values of inputs and text areas after editing and after cancelling

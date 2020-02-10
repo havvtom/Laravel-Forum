@@ -6,6 +6,8 @@
 				repliesCount: this.data.replies_count,
 				locked: this.data.locked,
 				editing: false,
+				body: this.data.body,
+				title: this.data.title,
 				form: {
 					title: this.data.title,
 					body: this.data.body
@@ -20,16 +22,28 @@
 				
 				this.locked =! this.locked;
 				
+			}, 
+			cancel(){
+
+				this.editing = false;
+				this.form.body = this.data.body;
+				this.form.title = this.data.title;
+
 			},
 
 			update(){
 
-				axios.patch('/threads/'+this.data.channel.slug+'/'+this.data.slug, {
-					title: this.data.title,
-					body: this.data.body
-				})
-				.then(()=> {flash('Your thread has been updated');})
-			}
+				axios.patch('/threads/'+this.data.channel.slug+'/'+this.data.slug, 
+					this.form
+				)
+				.then(()=> {
+
+					this.editing = false;
+					this.title = this.form.title;
+					this.body = this.form.body;
+					flash('Your thread has been updated');})
+			}, 
+			
 		},
 		computed: {
 			isAdmin(){
@@ -38,10 +52,13 @@
 				}
 
 					return false;
+			},
+			owns(){
+				return this.data.user_id === window.App.user.id;
 			}
 		}, 
 		created(){
-			console.log(this.data.channel.slug);
+			// console.log(this.data.user_id,window.App.user.id);
 		}
 	}
 </script>
