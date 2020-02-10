@@ -149,3 +149,8 @@ episode 87
 - (this.locked =! this.locked;) can be used to toggle the button between lock and unlock but the exclamation mark should be after =
 - if not $casts in the model, then asserting true as 1 and 0 as false is going to fail
 - we just need to put !! (double negative)
+
+episode 93
+
+- construct the endpoint manually since we have evrything we need from the thread
+- to pass the form fields we register the form as an object in the properties and use v-model binding

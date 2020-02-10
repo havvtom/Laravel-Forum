@@ -5,7 +5,7 @@
     <div class="card-header">
       <div class='level'>
         
-        <input class="form-control" type="text" name="title" value="{{$thread->title}}">
+        <input class="form-control" type="text" name="title" v-model="form.title">
         
           
         
@@ -14,13 +14,13 @@
         
     <div class="card-body">
       <div class="form-group">
-        <textarea class="form-control" rows="10">{{$thread->body}}</textarea>
+        <textarea class="form-control" rows="10" v-model="form.body"></textarea>
       </div>
     </div>
     <div class="card-footer">
       <div class="level">
         <button class="btn btn-outline-secondary btn-xs mr-2" v-if="!editing" @click="editing=true">Edit</button>
-        <button class="btn btn-primary btn-xs mr-2" @click="editing">Update</button>
+        <button class="btn btn-primary btn-xs mr-2" @click="update" >Update</button>
         <button class="btn btn-outline-secondary btn-xs" @click="editing=false">Cancel</button>
         @can('update', $thread)
           <form action="{{basename($thread->path())}}" method="POST" class="ml-a">

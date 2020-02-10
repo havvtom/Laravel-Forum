@@ -6,6 +6,10 @@
 				repliesCount: this.data.replies_count,
 				locked: this.data.locked,
 				editing: false,
+				form: {
+					title: this.data.title,
+					body: this.data.body
+				},
 			}
 		}, 
 		methods: {
@@ -16,6 +20,15 @@
 				
 				this.locked =! this.locked;
 				
+			},
+
+			update(){
+
+				axios.patch('/threads/'+this.data.channel.slug+'/'+this.data.slug, {
+					title: this.data.title,
+					body: this.data.body
+				})
+				.then(()=> {flash('Your thread has been updated');})
 			}
 		},
 		computed: {
@@ -28,7 +41,7 @@
 			}
 		}, 
 		created(){
-			console.log(this.data.locked);
+			console.log(this.data.channel.slug);
 		}
 	}
 </script>
