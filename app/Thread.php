@@ -11,10 +11,11 @@ use App\Notifications\ThreadWasUpdated;
 use App\Events\ThreadHasNewReply;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 class Thread extends Model
 {
-    use RecordsActivityTrait, RecordsVisitsTrait;
+    use RecordsActivityTrait, RecordsVisitsTrait, Searchable;
 
     protected $guarded = [];
 
