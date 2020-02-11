@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::view('scan', 'scan');
+
 Route::get('/threads/search', 'SearchController@show');
 
 Route::get('/threads', 'ThreadController@index')->name('threads');

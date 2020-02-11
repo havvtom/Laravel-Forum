@@ -157,3 +157,7 @@ episode 93
 - something wrong with my path($thread->channel->slug) 
 - changed the getRouteKeyName in channel model to 'slug'
 - learnt how to keep and change the values of inputs and text areas after editing and after cancelling
+
+episode 94
+
+-For the relationships to eager load they need to be added to toSearchableArray method

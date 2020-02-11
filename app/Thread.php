@@ -148,4 +148,18 @@ class Thread extends Model
         return $this->update(['best_reply_id' => $reply->id]);
     }
 
+    public function toSearchableArray()
+    {
+        /**
+         * Load the categories relation so that it's
+         * available in the Laravel toArray() method
+         */
+        $this->channel;
+        $this->owner;
+
+        $array = $this->toArray();
+        
+
+        return $array;
+    }
 }

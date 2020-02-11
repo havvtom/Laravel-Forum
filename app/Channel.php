@@ -6,10 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Channel extends Model
 {
-    // public function getRouteKeyName(){
-
-    // 	return 'slug';
-    // }
+    // use Searchable;
 
     public function threads(){
     	

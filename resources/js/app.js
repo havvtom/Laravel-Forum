@@ -30,11 +30,16 @@ Vue.component('paginator', require('./components/PaginatorComponent.vue').defaul
 Vue.component('subscribe-button', require('./components/SubscribeButton.vue').default);
 Vue.component('user-notifications', require('./components/UserNotifications.vue').default);
 Vue.component('avatar-form', require('./components/AvatarComponent.vue').default);
+Vue.component('search', require('./components/SearchComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+ import InstantSearch from 'vue-instantsearch';
+
+ Vue.use(InstantSearch);
+ 
  window.events = new Vue();
  window.flash = function(message, level='success'){window.events.$emit('flash', {message, level})};
  
