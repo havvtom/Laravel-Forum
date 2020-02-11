@@ -54,7 +54,11 @@
 					return false;
 			},
 			owns(){
-				return this.data.user_id === window.App.user.id;
+				if(window.App.user){
+
+					return this.data.user_id === window.App.user.id;
+				}
+				return false;
 			}
 		}, 
 		created(){

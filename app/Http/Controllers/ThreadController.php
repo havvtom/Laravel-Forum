@@ -31,7 +31,9 @@ class ThreadController extends Controller
            $threads = Thread::with('channel')->latest()->filter($request)->paginate(25); 
        }    
 
-     // $trending = array_map('json_decode',Redis::zrevrange('trending_threads', 0, 4));
+     if(request()->expectsJson()){
+        return $threads;
+     }
         
         return view('threads.index', ['threads' => $threads, 'trending' => $trending->get()]);
     }

@@ -55,7 +55,7 @@ class ThreadTest extends TestCase
 
         $response = $this->getJson('/threads?unanswered=1')->json();
 
-        $this->assertCount(1, $response);
+        $this->assertCount(1, $response['data']);
     }
 
     public function test_a_thread_can_be_subscribed_to(){

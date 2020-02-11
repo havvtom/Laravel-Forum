@@ -2562,7 +2562,11 @@ __webpack_require__.r(__webpack_exports__);
       return false;
     },
     owns: function owns() {
-      return this.data.user_id === window.App.user.id;
+      if (window.App.user) {
+        return this.data.user_id === window.App.user.id;
+      }
+
+      return false;
     }
   },
   created: function created() {// console.log(this.data.user_id,window.App.user.id);

@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/threads/search', 'SearchController@show');
+
 Route::get('/threads', 'ThreadController@index')->name('threads');
 
 Route::get('/threads/create', 'ThreadController@create');
@@ -26,7 +28,6 @@ Route::patch('/threads/{channel}/{thread}', 'ThreadController@update')->name('th
 Route::post('locked-threads/{thread}', 'LockedThreadsController@store')->name('locked-threads.store')->middleware('admin');
 
 Route::delete('locked-threads/{thread}', 'LockedThreadsController@destroy')->name('locked-threads.delete')->middleware('admin');
-
 
 Route::delete('/threads/{channel}/{thread}', 'ThreadController@destroy');
 
