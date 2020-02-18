@@ -161,3 +161,7 @@ episode 93
 episode 94
 
 -For the relationships to eager load they need to be added to toSearchableArray method
+
+episode 98
+
+https://www.algolia.com/doc/guides/building-search-ui/resources/ui-and-ux-patterns/in-depth/autocomplete/tutorials/how-to-build-rich-horizontal-multi-category-autocomplete-menu/#introduction
