@@ -165,3 +165,7 @@ episode 94
 episode 98
 
 https://www.algolia.com/doc/guides/building-search-ui/resources/ui-and-ux-patterns/in-depth/autocomplete/tutorials/how-to-build-rich-horizontal-multi-category-autocomplete-menu/#introduction
+
+episode 101
+
+create base folder in storage called purify to avoid error

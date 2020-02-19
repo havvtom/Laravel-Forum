@@ -73,6 +73,14 @@ class ReplyTest extends TestCase
 
         $this->assertTrue($reply->fresh()->isBestReply());
     }
+
+    public function test_a_reply_body_is_sanitized_automatically(){
+
+        $reply = factory(\App\Reply::class)->make(['body' => '<script>alert("bad")</script><p>This purity</p>']);
+
+        $this->assertEquals($reply->body, "<p>This purity</p>");
+
+    }
 }
 
-//"vendor\bin\phpunit" --filter test_it_knows_if_its_the_best_reply
+//"vendor\bin\phpunit" --filter test_a_reply_body_is_sanitized_automatically

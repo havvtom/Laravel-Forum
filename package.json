@@ -24,7 +24,8 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "algoliasearch": "^4.0.2",
+        "algoliasearch": "^3.27.1",
+        "autocomplete.js": "^0.37.1",
         "instantsearch.css": "^7.4.2",
         "moment": "^2.24.0",
         "tributejs": "^4.1.1",

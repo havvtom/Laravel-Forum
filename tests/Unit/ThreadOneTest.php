@@ -92,6 +92,14 @@ class ThreadTest extends TestCase
         $this->assertFalse($thread->hasUpdatesFor());
     }
 
+    public function test_a_thread_body_is_sanitized_automatically(){
+
+        $thread = factory(\App\Thread::class)->make(['body' => '<script>alert("bad")</script><p>This purity</p>']);
+
+        $this->assertEquals($thread->body, "<p>This purity</p>");
+
+    }
+
 }
 
-// "vendor\bin\phpunit" --filter  test_a_thread_can_check_if_an_authenticated_user_has_read_all_replies
+// "vendor\bin\phpunit" --filter test_a_thread_body_is_sanitized_automatically
