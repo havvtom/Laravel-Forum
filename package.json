@@ -27,7 +27,7 @@
         "algoliasearch": "^3.27.1",
         "autocomplete.js": "^0.37.1",
         "instantsearch.css": "^7.4.2",
-        "moment": "^2.24.0",
+        "moment": "^2.29.2",
         "tributejs": "^4.1.1",
         "vue-instantsearch": "^2.7.0"
     }
